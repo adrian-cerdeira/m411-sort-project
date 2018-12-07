@@ -11,5 +11,5 @@ typedef struct Person {
 } struPerson;
 
 int main() {
-
+	struPerson *pElement = (struPerson *)malloc(sizeof(struPerson));
 }
