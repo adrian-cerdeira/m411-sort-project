@@ -12,4 +12,6 @@ typedef struct Person {
 
 int main() {
 	struPerson *pElement = (struPerson *)malloc(sizeof(struPerson));
+
+	printf("Was möchten Sie tun?: Sortieren(s), Löschen(d), Ausgeben(a)\n");
 }
