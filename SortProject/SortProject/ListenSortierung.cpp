@@ -12,13 +12,13 @@ typedef struct Person {
 	struct Person* pPrev;
 } struPerson;
 
-// Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
-int main() {
-//	TODO: Bessere Speicherung der Eingabe
+// User-Interface: Mario Forrer nein Spass Ehrenmann 20XX
+void createUserInterface() {
+	//	TODO: Bessere Speicherung der Eingabe
 	char input = 'A';
 
-// TODO: Restliche verlangte Funktionen einbauen.
-// TODO: Umlaute einfacher formatieren
+	// TODO: Restliche verlangte Funktionen einbauen.
+	// TODO: Umlaute einfacher formatieren
 	printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", 148, 148, 148);
 	scanf("%s", input);
 	switch (input)
@@ -36,10 +36,15 @@ int main() {
 		break;
 	case 'e':
 		//Delete Funktion (Einzelne Elemente)
-		break; 
+		break;
 	default:
 		break;
 	}
+}
+
+// Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
+int main() {
+	createUserInterface();
 }
 
 //Create Funktion erstellen: Mario Forrer
