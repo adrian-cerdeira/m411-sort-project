@@ -50,7 +50,8 @@ struPerson* Create(const int Anzahl) {
 	struPerson *pPrevious = NULL;
 	for (int i = 0; i < Anzahl; i++) {
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
-//		TODO: Speichern von Namen und vornamen.
+		pCurrent->Vorname[40] = 'A' + rand() % 26;
+		pCurrent->Nachname[40] = 'A' + rand() % 26;
 		pCurrent->Jahrgang = 1900 + rand() % 118;
 		if (pPrevious == NULL) pStart = pCurrent;
 		else {
