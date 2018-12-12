@@ -48,6 +48,7 @@ struPerson* Create(const int Anzahl) {
 	struPerson *pStart = NULL;
 	struPerson *pCurrent = NULL;
 	struPerson *pPrevious = NULL;
+
 	for (int i = 0; i < Anzahl; i++) {
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
 		pCurrent->Vorname[40] = 'A' + rand() % 26;
