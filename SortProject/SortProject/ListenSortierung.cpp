@@ -12,13 +12,12 @@ typedef struct Person {
 	struct Person* pPrev;
 } struPerson;
 
-// User-Interface: Mario Forrer nein Spass Ehrenmann 20XX
+// User-Interface: Mario Forrer
 void createUserInterface() {
 	//	TODO: Bessere Speicherung der Eingabe
 	char input = 'A';
 
-	// TODO: Restliche verlangte Funktionen einbauen.
-	// TODO: Umlaute einfacher formatieren
+	// TODO: Restliche verlangte Funktionen einbauen & Umlaute einfacher formatieren
 	printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", 148, 148, 148);
 	scanf("%s", input);
 	switch (input)
