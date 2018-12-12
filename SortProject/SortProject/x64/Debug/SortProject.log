@@ -1,0 +1,3 @@
+﻿  ListenSortierung.cpp
+c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(22): warning C4477: "scanf": Die Formatzeichenfolge "%s" erfordert ein Argument vom Typ "char *", das variadic-Argument "1" weist aber den Typ "int" auf.
+  SortProject.vcxproj -> C:\Users\AC\Desktop\git\Sort\SortProject\x64\Debug\SortProject.exe

@@ -1,6 +1,7 @@
-#include "stdio.h";
-#include "stdlib.h";
-#include "time.h";
+#define _CRT_SECURE_NO_WARNINGS
+#include "stdio.h"
+#include "stdlib.h"
+#include "time.h"
 
 // Struktur Person erstellen: Adrian Cerdeira
 typedef struct Person {
@@ -13,13 +14,14 @@ typedef struct Person {
 
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
+//	TODO: Bessere Speicherung der Eingabe
+	char input = 'A';
 
-//	TODO: String-Dreck reparieren (hate it) 
-	char ansc;
 // TODO: Restliche verlangte Funktionen einbauen.
-	printf("Was möchten Sie tun?: Sortieren(s), Liste löschen(d), Elemente löschen (e), Ausgeben(a), \n");
-	scanf("%c", ansc);
-	switch (ansc)
+// TODO: Umlaute einfacher formatieren
+	printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", 148, 148, 148);
+	scanf("%s", input);
+	switch (input)
 	{
 	case 's':
 		// Sort Funktion
@@ -39,6 +41,7 @@ int main() {
 		break;
 	}
 }
+
 //Create Funktion erstellen: Mario Forrer
 struPerson* Create(const int Anzahl) {
 	srand((unsigned) time(NULL));
@@ -58,12 +61,10 @@ struPerson* Create(const int Anzahl) {
 	}
 	return pStart;
 }
+
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
-
-
-
-
+	return 0;
 }
 
 //*Sort Funktion erstellen: Mario Forrer
