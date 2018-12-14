@@ -86,3 +86,12 @@ struPerson* BubbleSort(struPerson* pStart) {
 struPerson* QuickSort(struPerson* pStart) {
 	return 0;
 }
+
+// Counter-Funktion erstellen: Adrian Cerdeira
+int countElements(struPerson* pStart) {
+	int counter = 0;
+	while (pStart->pNext == NULL) {
+		counter++;
+	};
+	return counter;
+}
