@@ -3,14 +3,22 @@
 #include "stdlib.h"
 #include "time.h"
 
-// Struktur Person erstellen: Adrian Cerdeira
-typedef struct Person {
+// Struktur Person erstellen: Mario Forrer
+
+typedef struct PersonData {
 	char Vorname[40];
 	char Nachname[40];
 	int Jahrgang;
+} struData;
+
+// Struktur Person erstellen: Adrian Cerdeira
+typedef struct Person {
+	struData* pData;
 	struct Person* pNext;
 	struct Person* pPrev;
 } struPerson;
+
+
 
 // User-Interface: Mario Forrer
 void createUserInterface() {
@@ -48,16 +56,17 @@ int main() {
 
 //Create Funktion erstellen: Mario Forrer
 struPerson* Create(const int Anzahl) {
-	srand((unsigned) time(NULL));
+	srand((unsigned)time(NULL));
 	struPerson *pStart = NULL;
 	struPerson *pCurrent = NULL;
 	struPerson *pPrevious = NULL;
 
 	for (int i = 0; i < Anzahl; i++) {
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
-		pCurrent->Vorname[40] = 'A' + rand() % 26;
-		pCurrent->Nachname[40] = 'A' + rand() % 26;
-		pCurrent->Jahrgang = 1900 + rand() % 118;
+		pCurrent->pData = (struData *)malloc(sizeof(struData));
+		pCurrent->pData->Vorname[40] = 'A' + rand() % 26;
+		pCurrent->pData->Nachname[40] = 'A' + rand() % 26;
+		pCurrent->pData->Jahrgang = 1900 + rand() % 118;
 		if (pPrevious == NULL) pStart = pCurrent;
 		else {
 			pCurrent->pPrev = pPrevious;
@@ -73,4 +82,7 @@ struPerson* BubbleSort(struPerson* pStart) {
 	return 0;
 }
 
-//*Sort Funktion erstellen: Mario Forrer
+//QuickSort Funktion erstellen: Mario Forrer
+struPerson* QuickSort(struPerson* pStart) {
+	return 0;
+}
