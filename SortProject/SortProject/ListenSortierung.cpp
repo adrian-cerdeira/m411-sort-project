@@ -22,16 +22,16 @@ typedef struct Person {
 
 // User-Interface: Mario Forrer
 void createUserInterface() {
-	//	TODO: Bessere Speicherung der Eingabe
-	char input = 'A';
+
+	char input;
 
 	// TODO: Restliche verlangte Funktionen einbauen & Umlaute einfacher formatieren
 	printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", 148, 148, 148);
-	scanf("%s", input);
+	scanf("%c", &input);
 	switch (input)
 	{
 	case 's':
-		// Sort Funktion
+		// sort Funktion
 		break;
 	case 'd':
 		// Delete Funktion
@@ -45,8 +45,10 @@ void createUserInterface() {
 		//Delete Funktion (Einzelne Elemente)
 		break;
 	default:
+		printf("Die eingabe ist Ungültig");
 		break;
 	}
+	
 }
 
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
