@@ -4,7 +4,7 @@
 #include "time.h"
 #include "string.h"
 
-// Struktur Person erstellen: Mario Forrer
+// Struktur PersonData erstellen: Mario Forrer
 
 typedef struct PersonData {
 	char Vorname[40];
@@ -33,19 +33,16 @@ struPerson* Create(const int Anzahl) {
 		// TODO: Zufälliger Buchstaben einfügen (Anstelle von kevin Nachname)
 		strcpy(pCurrent->pData->Vorname, "Kevin");
 		strcpy(pCurrent->pData->Nachname, "Nachname");
-
-		// FUNKTIONIERT NICHT:
-		// pCurrent->pData->Vorname[40] = 'A' + rand() % 26;
-		// pCurrent->pData->Nachname[40] = 'A' + rand() % 26;
-
 		pCurrent->pData->Jahrgang = 1900 + rand() % 118;
+
 		if (pPrevious == NULL) pStart = pCurrent;
 		else {
 			pCurrent->pPrev = pPrevious;
 			pCurrent->pPrev->pNext = pCurrent;
 		}
 		pPrevious = pCurrent;
-		if ((i + 1) == Anzahl) {
+		bool isSecondElement = (i + 1) == Anzahl;
+		if (isSecondElement) {
 			pCurrent->pNext = NULL;
 			pStart->pPrev = NULL;
 		}
@@ -59,11 +56,12 @@ void Output(struPerson* pStart) {
 
 	if (pStart != NULL) {
 		for (struPerson* pOut = pStart; pOut != NULL; pOut = pOut->pNext) {
-			printf("\n ---- \nElement:\n Name: "); // \nVorname: %s \nAlter: %i", pOut->pData->Nachname, pOut->pData->Vorname, pOut->pData->Jahrgang);
+			// Ausgabe Daten: \nVorname: %s \nAlter: %i", pOut->pData->Nachname, pOut->pData->Vorname, pOut->pData->Jahrgang);
+			printf("\n ---- \nElement:\n Name: "); 
 			for (int i = 0; pOut->pData->Nachname[i] != '\0'; i++) printf("%c", pOut->pData->Nachname[i]);
 			printf("\n Vorname: ");
 			for (int i = 0; pOut->pData->Vorname[i] != '\0'; i++) printf("%c", pOut->pData->Vorname[i]);
-			printf("\n Geburtstag: %i", pOut->pData->Jahrgang);
+			printf("\n Geburtstag: %i\n", pOut->pData->Jahrgang);
 		}
 	}
 	else {
@@ -115,7 +113,6 @@ struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 		}
 	}
 
-
 	struData* pTemp = pI->pData;
 	pI->pData = pPivot->pData;
 	pPivot->pData = pTemp;
@@ -153,7 +150,6 @@ struPerson* QuickSortPrep(struPerson* pStart) {
 	return pStart;
 }
 
-
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
 	struPerson* pStart = Create(15);
@@ -179,10 +175,10 @@ int main() {
 			//Delete Funktion (Einzelne Elemente)
 			break;
 		default:
-			printf("Die eingabe ist Ungültig");
+			printf("Die eingabe ist Ung%cltig", 201);
 			break;
 		}
-		char input = NULL;
+		input = NULL;
 	}
 	
 }
@@ -192,12 +188,11 @@ struPerson* BubbleSort(struPerson* pStart) {
 	return 0;
 }
 
-
-
 // Counter-Funktion erstellen: Adrian Cerdeira
 int countElements(struPerson* pStart) {
 	int counter = 0;
 	struPerson* pTemp = pStart;
+
 	while (pTemp->pNext != NULL) {
 		counter++;
 	};
