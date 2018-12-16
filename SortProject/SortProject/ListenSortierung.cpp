@@ -186,7 +186,8 @@ int main() {
 			printf("Die Eingabe ist Ung%cltig\n", ue);
 			break;
 		}
-		input = NULL;
+		// Um Buffer zu leeren
+		fseek(stdin, 0, SEEK_END);
 	}
 	
 }
