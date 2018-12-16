@@ -29,11 +29,15 @@ struPerson* Create(const int Anzahl) {
 	for (int i = 0; i < Anzahl; i++) {
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
 		pCurrent->pData = (struData *)malloc(sizeof(struData));
-//		char temp = (65 + +rand() % 26);
-		
-// TODO: Zufälliger Buchstaben einfügen (Anstelle von kevin Nachname)
+
+		// TODO: Zufälliger Buchstaben einfügen (Anstelle von kevin Nachname)
 		strcpy(pCurrent->pData->Vorname, "Kevin");
 		strcpy(pCurrent->pData->Nachname, "Nachname");
+
+		// FUNKTIONIERT NICHT:
+		// pCurrent->pData->Vorname[40] = 'A' + rand() % 26;
+		// pCurrent->pData->Nachname[40] = 'A' + rand() % 26;
+
 		pCurrent->pData->Jahrgang = 1900 + rand() % 118;
 		if (pPrevious == NULL) pStart = pCurrent;
 		else {
@@ -41,8 +45,12 @@ struPerson* Create(const int Anzahl) {
 			pCurrent->pPrev->pNext = pCurrent;
 		}
 		pPrevious = pCurrent;
-		if ((i + 1) == Anzahl) pCurrent->pNext = NULL;
+		if ((i + 1) == Anzahl) {
+			pCurrent->pNext = NULL;
+			pStart->pPrev = NULL;
+		}
 	}
+
 	return pStart;
 }
 
@@ -64,18 +72,100 @@ void Output(struPerson* pStart) {
 	
 }
 
+// TODO QUICKSORT: Fehler suchen, warum Werte nicht gewechselt werden
+//(QuickSort) Partition Funktion erstellen: Mario Forrer
+struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
+	struPerson* pPivot = pHigh;
+	struPerson* pI = pLow;
+	short int state = 0; // 0 = Not done 1 = Checked 
+	if (pI->pPrev != NULL) pI = pI->pPrev;
+
+	for (struPerson* pWork = pLow; pWork != pHigh; pWork->pNext) {
+		state = 0;
+		for (int j = 0; pWork->pData->Nachname[j] != '\0' && pPivot->pData->Nachname[j] != '\0'; j++) {
+			if (state == 0) {
+				if (pWork->pData->Nachname[j] == pPivot->pData->Nachname[j]);
+				else if (pWork->pData->Nachname[j] < pPivot->pData->Nachname[j]) {
+					if (pI->pPrev != NULL) pI = pI->pPrev;
+					struData* pTemp = pI->pData;
+					pI->pData = pWork->pData;
+					pWork->pData = pTemp;
+					state = 1;
+				}
+				else if (pWork->pData->Nachname[j] < pPivot->pData->Nachname[j])
+					state = 1;
+			}
+		}
+
+		if (state == 1) {
+			for (int j = 0; pWork->pData->Vorname[j] != '\0' && pPivot->pData->Vorname[j] != '\0'; j++) {
+				if (state == 0) {
+					if (pWork->pData->Vorname[j] == pPivot->pData->Vorname[j]);
+					else if (pWork->pData->Vorname[j] < pPivot->pData->Vorname[j]) {
+						if (pI->pPrev != NULL) pI = pI->pPrev;
+						struData* pTemp = pI->pData;
+						pI->pData = pWork->pData;
+						pWork->pData = pTemp;
+						state = 1;
+					}
+					else if (pWork->pData->Vorname[j] < pPivot->pData->Vorname[j])
+						state = 1;
+				}
+			}
+		}
+	}
+
+
+	struData* pTemp = pI->pData;
+	pI->pData = pPivot->pData;
+	pPivot->pData = pTemp;
+
+	return pI;
+}
+
+//(QuickSort) QuickSort Funktion erstellen: Mario Forrer
+void QuickSort(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
+	short int wholeState = 0;
+	for (struPerson* pOut = pLow; pOut != NULL; pOut = pOut->pNext) {
+		if (pLow == pHigh) wholeState = 1;
+
+	}
+	if (wholeState == 1) {
+		struPerson* pivot = Partition(pStart, pLow, pHigh);
+
+		QuickSort(pStart, pLow, pivot);
+		QuickSort(pStart, pivot, pHigh);
+	}
+}
+
+//(QuickSort) QuickSortPrep Funktion erstellen: Mario Forrer
+struPerson* QuickSortPrep(struPerson* pStart) {
+	//	int max = countElements(pStart) - 1;
+	struPerson* pLast = pStart;
+	struPerson* pTemp = pStart;
+	while (pTemp->pNext != NULL) {
+		pLast = pTemp;
+		pTemp = pTemp->pNext;
+	};
+
+	QuickSort(pStart, pStart, pLast);
+
+	return pStart;
+}
+
+
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
 	struPerson* pStart = Create(15);
 	char input;
 	while (true) {
-		// TODO: Restliche verlangte Funktionen einbauen & Umlaute einfacher formatieren
+		// TODO: Restliche verlangte Funktionen einbauen & Umlaute einfacher formatieren & Buffer leeren.
 		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", 148, 148, 148);
 		scanf("%c", &input);
 		switch (input)
 		{
 		case 's':
-			// sort Funktion
+			QuickSortPrep(pStart);
 			break;
 		case 'd':
 			// Delete Funktion
@@ -102,40 +192,13 @@ struPerson* BubbleSort(struPerson* pStart) {
 	return 0;
 }
 
-//(QuickSort) QuickSortPrep Funktion erstellen: Mario Forrer
-struPerson* QuickSortPrep(struPerson* pStart) {
-//	int max = countElements(pStart) - 1;
-	struPerson* pLast;
-	struPerson* pTemp = pStart;
-	while (pTemp->pNext == NULL) {
-		pLast = pTemp;
-		pTemp = pTemp->pNext;
-	};
 
-
-	return pStart;
-}
-
-//(QuickSort) Partition Funktion erstellen: Mario Forrer
-struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
-	struPerson* pPivot = pHigh;
-	struPerson* pI = pLow->pPrev;
-	return pStart;
-}
-
-//(QuickSort) QuickSort Funktion erstellen: Mario Forrer
-struPerson* QuickSort(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
-	if (pLow < pHigh) {
-		struPerson* pivot = Partition(pStart, pLow, pHigh);
-	}
-	return pStart;
-}
 
 // Counter-Funktion erstellen: Adrian Cerdeira
 int countElements(struPerson* pStart) {
 	int counter = 0;
 	struPerson* pTemp = pStart;
-	while (pTemp->pNext == NULL) {
+	while (pTemp->pNext != NULL) {
 		counter++;
 	};
 	return counter;
