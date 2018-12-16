@@ -158,9 +158,10 @@ struPerson* QuickSortPrep(struPerson* pStart) {
 int main() {
 	struPerson* pStart = Create(15);
 	char input;
+
 	while (true) {
 		// TODO: Restliche verlangte Funktionen einbauen & Buffer leeren.
-		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
+		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(d), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
 		scanf("%c", &input);
 		switch (input)
 		{
@@ -178,8 +179,11 @@ int main() {
 		case 'e':
 			//Delete Funktion (Einzelne Elemente)
 			break;
+		case 'r':
+			system("@cls||clear");
+			break;
 		default:
-			printf("Die eingabe ist Ung%cltig\n", ue);
+			printf("Die Eingabe ist Ung%cltig\n", ue);
 			break;
 		}
 		input = NULL;
