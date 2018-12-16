@@ -160,7 +160,7 @@ int main() {
 	char input;
 
 	while (true) {
-		// TODO: Restliche verlangte Funktionen einbauen & Buffer leeren.
+		// TODO: Restliche verlangte Funktionen einbauen
 		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(d), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
 		scanf("%c", &input);
 		switch (input)
