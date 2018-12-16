@@ -5,7 +5,6 @@
 #include "string.h"
 
 // Struktur PersonData erstellen: Mario Forrer
-
 typedef struct PersonData {
 	char Vorname[40];
 	char Nachname[40];
