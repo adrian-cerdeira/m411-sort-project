@@ -1,4 +1,9 @@
+// Catch Error of scanf
 #define _CRT_SECURE_NO_WARNINGS
+// Umlaute definieren
+#define ue (unsigned char)129
+#define oe (unsigned char)148
+
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"
@@ -154,8 +159,8 @@ int main() {
 	struPerson* pStart = Create(15);
 	char input;
 	while (true) {
-		// TODO: Restliche verlangte Funktionen einbauen & Umlaute einfacher formatieren & Buffer leeren.
-		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", 148, 148, 148);
+		// TODO: Restliche verlangte Funktionen einbauen & Buffer leeren.
+		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
 		scanf("%c", &input);
 		switch (input)
 		{
@@ -174,7 +179,7 @@ int main() {
 			//Delete Funktion (Einzelne Elemente)
 			break;
 		default:
-			printf("Die eingabe ist Ung%cltig", 201);
+			printf("Die eingabe ist Ung%cltig\n", ue);
 			break;
 		}
 		input = NULL;
