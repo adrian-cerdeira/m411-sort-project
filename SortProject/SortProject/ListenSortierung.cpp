@@ -35,8 +35,8 @@ struPerson* Create(const int Anzahl) {
 		pCurrent->pData = (struData *)malloc(sizeof(struData));
 
 		// TODO: Zufälliger Buchstaben einfügen (Anstelle von kevin Nachname)
-		for (int i = 0; pCurrent->pData->Vorname[i] != '\0'; i++)  strcpy(pCurrent->pData->Vorname, "A" + rand() % 26);
-		for (int i = 0; pCurrent->pData->Nachname[i] != '\0'; i++) strcpy(pCurrent->pData->Nachname, "C" + rand() % 26);
+		strcpy(pCurrent->pData->Vorname, "Kevin");
+		strcpy(pCurrent->pData->Nachname, "Fritz");
 		pCurrent->pData->Jahrgang = 1900 + rand() % 118;
 
 		if (pPrevious == NULL) {
@@ -171,7 +171,7 @@ int main() {
 
 	while (true) {
 		// TODO: Restliche verlangte Funktionen einbauen
-		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(d), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
+		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(r), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
 		scanf("%c", &input);
 		switch (input)
 		{
