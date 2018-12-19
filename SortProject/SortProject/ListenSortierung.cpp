@@ -30,8 +30,6 @@ struPerson* Create(const int Anzahl) {
 	struPerson *pCurrent = NULL;
 	struPerson *pPrevious = NULL;
 
-
-
 	for (int i = 0; i < Anzahl; i++) {
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
 		pCurrent->pData = (struData *)malloc(sizeof(struData));
@@ -83,9 +81,6 @@ struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 	struPerson* pI = pLow;
 	short int state = 0; // 0 = Not done 1 = Checked 
 //	if (pI->pPrev != NULL) pI = pI->pPrev;
-
-
-
 
 	for (struPerson* pWork = pLow; pWork != pHigh; pWork = pWork->pNext) {
 		state = 0;
