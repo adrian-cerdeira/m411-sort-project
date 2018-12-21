@@ -45,3 +45,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 /SortProject/.vs/SortProject/v15
+/SortProject/SortProject/Debug/SortProject.tlog
+/SortProject/SortProject/Debug

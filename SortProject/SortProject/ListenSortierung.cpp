@@ -187,7 +187,7 @@ int main() {
 		if (pStart != NULL) {
 			char input;
 			// TODO: Restliche verlangte Funktionen einbauen
-			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(r), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
+			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r),", oe, oe, oe);
 			scanf("%c", &input);
 			switch (input)
 			{
@@ -208,6 +208,9 @@ int main() {
 				break;
 			case 'r':
 				system("@cls||clear");
+				break;
+			case 'x':
+				return 0;
 				break;
 			default:
 				printf("Die Eingabe ist Ung%cltig\n", ue);
