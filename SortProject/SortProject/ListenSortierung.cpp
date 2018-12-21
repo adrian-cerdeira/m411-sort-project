@@ -58,6 +58,29 @@ struPerson* Create(const int Anzahl) {
 	return pStart;
 }
 
+//searchElement Funktion erstellen: Adrian Cerdeira
+struPerson* searchElement(struPerson *pStart, char lastName[40], char firstName[40]) {
+	struPerson* pSearch = pStart;
+	while (pSearch != NULL) {
+		bool isFirstNameAndLastName = strcmp(pSearch->pData->Nachname, lastName) == 0 && strcmp(pSearch->pData->Vorname, firstName) == 0;
+		if (isFirstNameAndLastName) {
+			return pSearch;
+		}
+		else {
+			printf("Element nicht gefunden\n");
+		}
+	}
+}
+
+//deleteElement Funktion erstellen: Adrian Cerdeira
+struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
+	struPerson* pDel;
+	for (pDel = pStart; pDel != NULL; pDel->pNext++) {
+		pDel->pPrev->pNext = pDel->pNext;
+	}
+	return pDel;
+}
+
 //Output Funktion erstellen: Mario Forrer
 void Output(struPerson* pStart) {
 
@@ -186,6 +209,10 @@ int main() {
 	while (true) {
 		if (pStart != NULL) {
 			char input;
+			char firstName[40];
+			char lastName[40];
+			struPerson *pSearchElement = NULL;
+
 			// TODO: Restliche verlangte Funktionen einbauen
 			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
 			scanf("%c", &input);
@@ -205,7 +232,25 @@ int main() {
 				// Listenauswahl
 				break;
 			case 'e':
-				//Delete Funktion (Einzelne Elemente)
+				// FIX BUG: Two get_s wait of Inputs 
+				printf("Nachname:\n");
+				gets_s(lastName);
+
+				printf("Vorname:\n");
+				gets_s(firstName);
+
+				//TODO: Testing and fixit
+				do {
+					pSearchElement = searchElement(pStart, lastName, firstName);
+					if (pSearchElement != NULL) {
+						pStart = deleteElement(pStart, pSearchElement);
+						printf("Element wurde gelöscht\n");
+					}
+					else {
+						printf("Element wurde nicht gefunden oder konnte nicht gel%cscht werden\n", oe);
+					}
+				} while (pSearchElement != NULL);
+
 				break;
 			case 'r':
 				system("@cls||clear");
