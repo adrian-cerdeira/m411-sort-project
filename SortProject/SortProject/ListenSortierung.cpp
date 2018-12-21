@@ -34,9 +34,10 @@ struPerson* Create(const int Anzahl) {
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
 		pCurrent->pData = (struData *)malloc(sizeof(struData));
 
-		// TODO: Zufälliger Buchstaben einfügen (Anstelle von kevin Nachname)
-		strcpy(pCurrent->pData->Vorname, "Kevin");
-		strcpy(pCurrent->pData->Nachname, "Fritz");
+		pCurrent->pData->Vorname[0] = 'A' + (rand() % 26);
+		pCurrent->pData->Vorname[1] = '\0';
+		pCurrent->pData->Nachname[0] = 'A' + (rand() % 26);
+		pCurrent->pData->Nachname[1] = '\0';
 		pCurrent->pData->Jahrgang = 1900 + rand() % 118;
 
 		if (pPrevious == NULL) {
