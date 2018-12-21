@@ -182,8 +182,7 @@ struPerson* createList(struPerson *pStart) {
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
 	struPerson* pStart = NULL;
-	pStart = createList(pStart);
-
+;
 	while (true) {
 		if (pStart != NULL) {
 			char input;
@@ -222,7 +221,7 @@ int main() {
 			fseek(stdin, 0, SEEK_END);
 		}
 		else {
-			createList(pStart);
+			pStart = createList(pStart);
 		}
 	}
 
