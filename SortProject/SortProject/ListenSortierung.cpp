@@ -164,41 +164,61 @@ struPerson* QuickSortPrep(struPerson* pStart) {
 	return pStart;
 }
 
+struPerson* createList(struPerson *pStart) {
+	int amount = 0;
+
+	printf("Wie viele Elemente m%cchten Sie erstellen?\n", oe);
+	scanf("%i", &amount);
+	pStart = Create(amount);
+	printf("Liste wurde erstellt\n", oe);
+
+	// Um Buffer zu leeren
+	fseek(stdin, 0, SEEK_END);
+
+	return pStart;
+}
+
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
-	struPerson* pStart = Create(15);
-	char input;
+	struPerson* pStart = NULL;
+	pStart = createList(pStart);
 
 	while (true) {
-		// TODO: Restliche verlangte Funktionen einbauen
-		printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(r), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
-		scanf("%c", &input);
-		switch (input)
-		{
-		case 's':
-			QuickSortPrep(pStart);
-			break;
-		case 'd':
-			// Delete Funktion
-			break;
-		case 'a':
-			Output(pStart);
-			break;
-		case 'l':
-			// Listenauswahl
-			break;
-		case 'e':
-			//Delete Funktion (Einzelne Elemente)
-			break;
-		case 'r':
-			system("@cls||clear");
-			break;
-		default:
-			printf("Die Eingabe ist Ung%cltig\n", ue);
-			break;
+		if (pStart != NULL) {
+			char input;
+			// TODO: Restliche verlangte Funktionen einbauen
+			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Liste leeren(r), Elemente l%cschen (e), Ausgeben(a), \n", oe, oe, oe);
+			scanf("%c", &input);
+			switch (input)
+			{
+			case 's':
+				QuickSortPrep(pStart);
+				break;
+			case 'd':
+				// Delete Funktion
+				break;
+			case 'a':
+				Output(pStart);
+				break;
+			case 'l':
+				// Listenauswahl
+				break;
+			case 'e':
+				//Delete Funktion (Einzelne Elemente)
+				break;
+			case 'r':
+				system("@cls||clear");
+				break;
+			default:
+				printf("Die Eingabe ist Ung%cltig\n", ue);
+				break;
+			}
+			// Um Buffer zu leeren
+			fseek(stdin, 0, SEEK_END);
 		}
-		// Um Buffer zu leeren
-		fseek(stdin, 0, SEEK_END);
+		else {
+			createList(pStart);
+		}
 	}
 
 }
