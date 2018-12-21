@@ -187,7 +187,7 @@ int main() {
 		if (pStart != NULL) {
 			char input;
 			// TODO: Restliche verlangte Funktionen einbauen
-			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r),", oe, oe, oe);
+			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
 			scanf("%c", &input);
 			switch (input)
 			{
@@ -195,7 +195,8 @@ int main() {
 				QuickSortPrep(pStart);
 				break;
 			case 'd':
-				// Delete Funktion
+				pStart = NULL;
+				printf("Liste gel%cscht\n", oe);
 				break;
 			case 'a':
 				Output(pStart);
