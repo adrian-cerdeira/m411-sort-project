@@ -102,6 +102,24 @@ void Output(struPerson* pStart) {
 
 }
 
+//Bubblesort Funktion erstellen: Adrian Cerdeira
+struPerson* BubbleSort(struPerson* pStart) {
+	//TODO: Warum werden Werte nicht passend sortiert
+	for (int i = 0; pStart != NULL; i++)
+	{
+		for (int j = i + 1; pStart != NULL; j++)
+		{
+			if (pStart->pData->Nachname[i] > pStart->pData->Nachname[j])
+			{
+				pStart->pData->Nachname[i] = pStart->pData->Nachname[j];
+				pStart->pData->Nachname[j] = pStart->pData->Nachname[i];
+				printf("Elemente per Bubblesort sortiert\n");
+				return pStart;
+			}
+		}
+	}
+}
+
 // TODO QUICKSORT: Fehler suchen, warum Werte nicht gewechselt werden
 //(QuickSort) Partition Funktion erstellen: Mario Forrer
 struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
@@ -208,21 +226,24 @@ struPerson* createList(struPerson *pStart) {
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
 	struPerson* pStart = NULL;
+	struPerson *pSearchElement = NULL;
+
+	char input;
+	char inputSort;
+	char firstName[40];
+	char lastName[40];
 ;
 	while (true) {
 		if (pStart != NULL) {
-			char input;
-			char firstName[40];
-			char lastName[40];
-			struPerson *pSearchElement = NULL;
-
 			// TODO: Restliche verlangte Funktionen einbauen
 			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
 			scanf("%c", &input);
 			switch (input)
 			{
 			case 's':
-				QuickSortPrep(pStart);
+				// TODO: Abfrage welche Sortierungsart
+				//QuickSortPrep(pStart); Auskommentiert bis dies funktioniert
+				pStart = BubbleSort(pStart);
 				break;
 			case 'd':
 				pStart = NULL;
@@ -273,11 +294,6 @@ int main() {
 		}
 	}
 
-}
-
-//Bubblesort Funktion erstellen: Adrian Cerdeira
-struPerson* BubbleSort(struPerson* pStart) {
-	return 0;
 }
 
 // Counter-Funktion erstellen: Adrian Cerdeira
