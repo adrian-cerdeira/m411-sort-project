@@ -60,13 +60,13 @@ struPerson* Create(const int Anzahl) {
 
 //searchElement Funktion erstellen: Adrian Cerdeira
 struPerson* searchElement(struPerson *pStart, char lastName[40], char firstName[40]) {
-	struPerson* pSearch = pStart;
-	while (pSearch != NULL) {
-		bool isFirstNameAndLastName = strcmp(pSearch->pData->Nachname, lastName) == 0 && strcmp(pSearch->pData->Vorname, firstName) == 0;
+	struPerson* pSearch = NULL;
+	while (pStart != NULL) {
+		bool isFirstNameAndLastName = strcmp(pStart->pData->Nachname, lastName) == 0 && strcmp(pStart->pData->Vorname, firstName) == 0;
 		if (isFirstNameAndLastName) {
-			return pSearch;
+			return pSearch = pStart->pNext;
 		}
-		else {
+		else if(pStart == NULL) {
 			printf("Element nicht gefunden\n");
 		}
 	}
@@ -74,9 +74,11 @@ struPerson* searchElement(struPerson *pStart, char lastName[40], char firstName[
 
 //deleteElement Funktion erstellen: Adrian Cerdeira
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
-	struPerson* pDel;
-	for (pDel = pStart; pDel != NULL; pDel->pNext++) {
-		pDel->pPrev->pNext = pDel->pNext;
+	struPerson* pDel = pStart;
+	for (pDel; pDel != NULL; pDel->pNext++) {
+		if (pDel->pPrev == pSearchElement) {
+			pDel->pPrev->pNext = pDel->pNext;
+		}
 	}
 	return pDel;
 }
@@ -188,6 +190,7 @@ struPerson* QuickSortPrep(struPerson* pStart) {
 	return pStart;
 }
 
+// createList-Funktion erstellen: Adrian Cerdeira
 struPerson* createList(struPerson *pStart) {
 	int amount = 0;
 
