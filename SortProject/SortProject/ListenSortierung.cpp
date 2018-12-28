@@ -83,17 +83,32 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	return pDel;
 }
 
+void putDataToConsole(int elementIndex, struPerson* pOut) {
+	// Ausgabe Daten: \nAlter: %i"
+	struPerson *pCurrent = pOut;
+	printf("\n ---- \nElement:%i\n", elementIndex);
+	printf("Name: %c\n", pCurrent->pData->Nachname[0]);
+	printf("Vorname: %c\n", pCurrent->pData->Vorname[0]);
+	printf("Geburtstag: %i\n", pCurrent->pData->Jahrgang);
+}
+
 //Output Funktion erstellen: Mario Forrer
-void Output(struPerson* pStart) {
+void Output(struPerson* pStart, int amountElements) {
 
 	if (pStart != NULL) {
-		int i = 1;
-		// Ausgabe Daten: \nAlter: %i"
-		for (struPerson* pOut = pStart; pOut != NULL; pOut = pOut->pNext) {
-			printf("\n ---- \nElement:%i\n", i++);
-			printf("Name: %c\n", pOut->pData->Nachname[0]);
-			printf("Vorname: %c\n", pOut->pData->Vorname[0]);
-			printf("Geburtstag: %i\n", pOut->pData->Jahrgang);
+		if (amountElements != 0) {
+			int i = 1;
+			for (struPerson* pOut = pStart;  i <= amountElements; pOut = pOut->pNext) {
+				putDataToConsole(i, pOut);
+				i++;
+			}
+		}
+		else {
+			int i = 1;
+			for (struPerson* pOut = pStart; pOut != NULL; pOut = pOut->pNext) {
+				putDataToConsole(i, pOut);
+				i++;
+			}
 		}
 	}
 	else {
@@ -229,6 +244,7 @@ int main() {
 	struPerson *pSearchElement = NULL;
 
 	char input;
+	int  inputAmoutElements = 0;
 	char inputSort;
 	char firstName[40];
 	char lastName[40];
@@ -250,7 +266,9 @@ int main() {
 				printf("Liste gel%cscht\n", oe);
 				break;
 			case 'a':
-				Output(pStart);
+				printf("Wie viele Elemente m%cchten Sie ausgeben?\n", oe);
+				scanf("%i", &inputAmoutElements);
+				Output(pStart, inputAmoutElements);
 				break;
 			case 'l':
 				// Listenauswahl
@@ -294,15 +312,4 @@ int main() {
 		}
 	}
 
-}
-
-// Counter-Funktion erstellen: Adrian Cerdeira
-int countElements(struPerson* pStart) {
-	int counter = 0;
-	struPerson* pTemp = pStart;
-
-	while (pTemp->pNext != NULL) {
-		counter++;
-	};
-	return counter;
 }
