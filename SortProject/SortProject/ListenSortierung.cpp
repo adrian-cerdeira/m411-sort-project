@@ -87,13 +87,13 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 void Output(struPerson* pStart) {
 
 	if (pStart != NULL) {
+		int i = 1;
+		// Ausgabe Daten: \nAlter: %i"
 		for (struPerson* pOut = pStart; pOut != NULL; pOut = pOut->pNext) {
-			// Ausgabe Daten: \nVorname: %s \nAlter: %i", pOut->pData->Nachname, pOut->pData->Vorname, pOut->pData->Jahrgang);
-			printf("\n ---- \nElement:\n Name: ");
-			for (int i = 0; pOut->pData->Nachname[i] != '\0'; i++) printf("%c", pOut->pData->Nachname[i]);
-			printf("\n Vorname: ");
-			for (int i = 0; pOut->pData->Vorname[i] != '\0'; i++) printf("%c", pOut->pData->Vorname[i]);
-			printf("\n Geburtstag: %i\n", pOut->pData->Jahrgang);
+			printf("\n ---- \nElement:%i\n", i++);
+			printf("Name: %c\n", pOut->pData->Nachname[0]);
+			printf("Vorname: %c\n", pOut->pData->Vorname[0]);
+			printf("Geburtstag: %i\n", pOut->pData->Jahrgang);
 		}
 	}
 	else {
