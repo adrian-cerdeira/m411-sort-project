@@ -73,6 +73,7 @@ struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[])
 //deleteElement Funktion erstellen: Adrian Cerdeira
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	struPerson* pCurrent = pStart;
+	struPerson* pNewList = NULL;
 
 	// TODO: Delete Element correctly and return new List
 	while (pCurrent != NULL) {
@@ -83,6 +84,8 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 		}
 		pDel = pDel->pNext;
 	}
+
+	return pNewList;
 }
 
 // putDataToConsole Funktion erstellen: Adrian Cerdeira
@@ -126,19 +129,18 @@ void Output(struPerson* pStart, int amountElements) {
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
 	//TODO: Warum werden Werte nicht passend sortiert
-	for (int i = 0; pStart != NULL; i++)
+
+	for (pStart; pStart != NULL; pStart = pStart->pNext) 
 	{
-		for (int j = i + 1; pStart != NULL; j++)
+		if (pStart->pData->Nachname[0] > pStart->pPrev->pData->Nachname[0])
 		{
-			if (pStart->pData->Nachname[i] > pStart->pData->Nachname[j])
-			{
-				pStart->pData->Nachname[i] = pStart->pData->Nachname[j];
-				pStart->pData->Nachname[j] = pStart->pData->Nachname[i];
-				printf("Elemente per Bubblesort sortiert\n");
-				return pStart;
-			}
+			pStart->pData->Nachname[0] = pStart->pPrev->pData->Nachname[0];
+			pStart->pPrev->pData->Nachname[0] = pStart->pData->Nachname[0];
 		}
 	}
+
+	printf("Liste wurde per Bubblesort sortiert\n");
+	return pStart;
 }
 
 // TODO QUICKSORT: Fehler suchen, warum Werte nicht gewechselt werden
@@ -264,8 +266,9 @@ int main() {
 			{
 			case 's':
 				// TODO: Abfrage welche Sortierungsart
-				//QuickSortPrep(pStart); Auskommentiert bis dies funktioniert
-				pStart = BubbleSort(pStart);
+				printf("M%cchten Sie per Quicksort sortieren(J/N):\n", oe);
+				scanf("%s", &inputSort); 
+				inputSort == 'J' ? pStart = QuickSortPrep(pStart) : pStart = BubbleSort(pStart);
 				break;
 			case 'd':
 				pStart = NULL;
