@@ -86,6 +86,7 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 // putDataToConsole Funktion erstellen: Adrian Cerdeira
 void putDataToConsole(struPerson* pOut, int elementNumber) {
 	struPerson *pCurrent = pOut;
+	//TODO: Aktuelles Jahr abfragen
 	int alter = 2018 - pCurrent->pData->Jahrgang;
 
 	printf("\n ---- \nElement:%i\n", elementNumber);
@@ -249,8 +250,8 @@ int main() {
 	char input;
 	int  inputAmoutElements = 0;
 	char inputSort;
-	char firstName[40];
-	char lastName[40];
+	char inputFirstName[40];
+	char inputLastName[40];
 ;
 	while (true) {
 		if (pStart != NULL) {
@@ -277,16 +278,16 @@ int main() {
 				// Listenauswahl
 				break;
 			case 'e':
-				// FIX BUG: Two get_s wait of Inputs 
+				// TODO: With get_s falls möglich
 				printf("Name:\n");
-				gets_s(lastName);
+				scanf("%s", &inputLastName[0]);
 
 				printf("Vorname:\n");
-				gets_s(firstName);
+				scanf("%s", &inputFirstName[0]);
 
 				//TODO: Testing and fixit
 				do {
-					pSearchElement = searchElement(pStart, lastName, firstName);
+					pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
 					if (pSearchElement != NULL) {
 						pStart = deleteElement(pStart, pSearchElement);
 						printf("Element wurde gelöscht\n");

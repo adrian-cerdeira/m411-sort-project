@@ -1,3 +1,7 @@
 ﻿  ListenSortierung.cpp
-c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(23): warning C4477: "scanf": Die Formatzeichenfolge "%s" erfordert ein Argument vom Typ "char *", das variadic-Argument "1" weist aber den Typ "int" auf.
+c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(236): warning C4474: "printf": zu viele Argumente für Formatzeichenfolge übergeben
+  c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(236): note: Platzhalter und deren Parameter erwarten 0 variadic-Argumente, es wurden aber 1 variadic-Argumente bereitgestellt.
+c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(251): warning C4101: "inputSort": Unreferenzierte lokale Variable
+c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(73): warning C4715: "searchElement": Nicht alle Codepfade geben einen Wert zurück.
+c:\users\ac\desktop\git\sort\sortproject\sortproject\listensortierung.cpp(139): warning C4715: "BubbleSort": Nicht alle Codepfade geben einen Wert zurück.
   SortProject.vcxproj -> C:\Users\AC\Desktop\git\Sort\SortProject\x64\Debug\SortProject.exe
