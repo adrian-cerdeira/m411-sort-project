@@ -59,28 +59,30 @@ struPerson* Create(const int Anzahl) {
 }
 
 //searchElement Funktion erstellen: Adrian Cerdeira
-struPerson* searchElement(struPerson *pStart, char lastName[40], char firstName[40]) {
+struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[]) {
 	struPerson* pSearch = NULL;
 	while (pStart != NULL) {
-		bool isFirstNameAndLastName = strcmp(pStart->pData->Nachname, lastName) == 0 && strcmp(pStart->pData->Vorname, firstName) == 0;
+		bool isFirstNameAndLastName = pStart->pData->Nachname[0] == lastName[0] && pStart->pData->Vorname[0] == firstName[0];
 		if (isFirstNameAndLastName) {
-			return pSearch = pStart->pNext;
+			return pSearch = pStart;
 		}
-		else if(pStart == NULL) {
-			printf("Element nicht gefunden\n");
-		}
+		pStart = pStart->pNext;
 	}
 }
 
 //deleteElement Funktion erstellen: Adrian Cerdeira
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
-	struPerson* pDel = pStart;
-	for (pDel; pDel != NULL; pDel->pNext++) {
-		if (pDel->pPrev == pSearchElement) {
-			pDel->pPrev->pNext = pDel->pNext;
+	struPerson* pCurrent = pStart;
+
+	// TODO: Delete Element correctly and return new List
+	while (pCurrent != NULL) {
+		struPerson* pDel = pCurrent;
+		if (pDel == pSearchElement) {
+			pCurrent->pPrev = pDel->pNext;
+			free(pSearchElement);
 		}
+		pDel = pDel->pNext;
 	}
-	return pDel;
 }
 
 // putDataToConsole Funktion erstellen: Adrian Cerdeira
@@ -285,17 +287,14 @@ int main() {
 				printf("Vorname:\n");
 				scanf("%s", &inputFirstName[0]);
 
-				//TODO: Testing and fixit
-				do {
-					pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
-					if (pSearchElement != NULL) {
-						pStart = deleteElement(pStart, pSearchElement);
-						printf("Element wurde gelöscht\n");
-					}
-					else {
-						printf("Element wurde nicht gefunden oder konnte nicht gel%cscht werden\n", oe);
-					}
-				} while (pSearchElement != NULL);
+				pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
+				if (pSearchElement != NULL) {
+					pStart = deleteElement(pStart, pSearchElement);
+					printf("Element/Elemente wurde/n gel%cscht\n", oe);
+				}
+				else {
+					printf("Element wurde nicht gefunden oder konnte nicht gel%cscht werden\n", oe);
+				}
 
 				break;
 			case 'r':
