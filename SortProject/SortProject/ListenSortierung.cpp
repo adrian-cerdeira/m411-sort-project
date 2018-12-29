@@ -83,30 +83,33 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	return pDel;
 }
 
-void putDataToConsole(int elementIndex, struPerson* pOut) {
-	// Ausgabe Daten: \nAlter: %i"
+// putDataToConsole Funktion erstellen: Adrian Cerdeira
+void putDataToConsole(struPerson* pOut, int elementNumber) {
 	struPerson *pCurrent = pOut;
-	printf("\n ---- \nElement:%i\n", elementIndex);
+	int alter = 2018 - pCurrent->pData->Jahrgang;
+
+	printf("\n ---- \nElement:%i\n", elementNumber);
 	printf("Name: %c\n", pCurrent->pData->Nachname[0]);
 	printf("Vorname: %c\n", pCurrent->pData->Vorname[0]);
 	printf("Geburtstag: %i\n", pCurrent->pData->Jahrgang);
+	printf("Alter: %i\n", alter);
 }
 
 //Output Funktion erstellen: Mario Forrer
 void Output(struPerson* pStart, int amountElements) {
-
+	//TODO: Catch error if amountElements bigger than pStart 
 	if (pStart != NULL) {
 		if (amountElements != 0) {
 			int i = 1;
 			for (struPerson* pOut = pStart;  i <= amountElements; pOut = pOut->pNext) {
-				putDataToConsole(i, pOut);
+				putDataToConsole(pOut, i);
 				i++;
 			}
 		}
 		else {
 			int i = 1;
 			for (struPerson* pOut = pStart; pOut != NULL; pOut = pOut->pNext) {
-				putDataToConsole(i, pOut);
+				putDataToConsole(pOut, i);
 				i++;
 			}
 		}
