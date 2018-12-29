@@ -255,7 +255,7 @@ int main() {
 	while (true) {
 		if (pStart != NULL) {
 			// TODO: Restliche verlangte Funktionen einbauen
-			printf("Was m%cchten Sie tun?: Sortieren(s), Liste l%cschen(d), Elemente l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
+			printf("Was m%cchten Sie tun?: Liste sortieren(s), Liste l%cschen(d), Element l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
 			scanf("%c", &input);
 			switch (input)
 			{
@@ -269,7 +269,7 @@ int main() {
 				printf("Liste gel%cscht\n", oe);
 				break;
 			case 'a':
-				printf("Wie viele Elemente m%cchten Sie ausgeben?\n", oe);
+				printf("Wie viele Elemente m%cchten Sie ausgeben? (0 = Alle)\n", oe);
 				scanf("%i", &inputAmoutElements);
 				Output(pStart, inputAmoutElements);
 				break;
@@ -278,7 +278,7 @@ int main() {
 				break;
 			case 'e':
 				// FIX BUG: Two get_s wait of Inputs 
-				printf("Nachname:\n");
+				printf("Name:\n");
 				gets_s(lastName);
 
 				printf("Vorname:\n");
