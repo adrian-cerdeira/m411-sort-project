@@ -283,7 +283,6 @@ int main() {
 			switch (input)
 			{
 			case 's':
-				// TODO: Abfrage welche Sortierungsart
 				printf("M%cchten Sie per Quicksort sortieren(J/N):\n", oe);
 				scanf("%s", &inputSort); 
 				inputSort == 'J' ? pStart = QuickSortPrep(pStart) : pStart = BubbleSort(pStart);
