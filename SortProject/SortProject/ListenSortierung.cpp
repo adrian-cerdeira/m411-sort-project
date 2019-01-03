@@ -88,6 +88,19 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	return pNewList;
 }
 
+// Counter-Funktion erstellen: Adrian Cerdeira
+int countElements(struPerson* pStart) {
+	int counter = 0;
+	struPerson* pTemp = pStart;
+
+	while (pTemp != NULL) {
+		counter++;
+		pTemp = pTemp->pNext;
+	};
+
+	return counter;
+}
+
 // putDataToConsole Funktion erstellen: Adrian Cerdeira
 void putDataToConsole(struPerson* pOut, int elementNumber) {
 	struPerson *pCurrent = pOut;
@@ -103,13 +116,18 @@ void putDataToConsole(struPerson* pOut, int elementNumber) {
 
 //Output Funktion erstellen: Mario Forrer
 void Output(struPerson* pStart, int amountElements) {
-	//TODO: Catch error if amountElements bigger than pStart 
 	if (pStart != NULL) {
 		if (amountElements != 0) {
-			int i = 1;
-			for (struPerson* pOut = pStart;  i <= amountElements; pOut = pOut->pNext) {
-				putDataToConsole(pOut, i);
-				i++;
+			int existingElements = countElements(pStart);
+			if (amountElements < existingElements) {
+				int i = 1;
+				for (struPerson* pOut = pStart; i <= amountElements; pOut = pOut->pNext) {
+					putDataToConsole(pOut, i);
+					i++;
+				}
+			}
+			else {
+				printf("Es k%cnnen maximal %i Elemente ausgegeben werden\n", oe, existingElements);
 			}
 		}
 		else {
@@ -317,5 +335,4 @@ int main() {
 			pStart = createList(pStart);
 		}
 	}
-
 }
