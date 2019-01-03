@@ -48,8 +48,8 @@ struPerson* Create(const int Anzahl) {
 			pCurrent->pPrev->pNext = pCurrent;
 		}
 		pPrevious = pCurrent;
-		bool isSecondElement = (i + 1) == Anzahl;
-		if (isSecondElement) {
+		bool isLastElement = (i + 1) == Anzahl;
+		if (isLastElement) {
 			pCurrent->pNext = NULL;
 			pStart->pPrev = NULL;
 		}
