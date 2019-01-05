@@ -344,6 +344,7 @@ int main() {
 				system("@cls||clear");
 				break;
 			case 'x':
+				//ERROR: Falls s ausgewählt wird, sollte das Programm auch beenden werden können
 				return 0;
 				break;
 			default:
