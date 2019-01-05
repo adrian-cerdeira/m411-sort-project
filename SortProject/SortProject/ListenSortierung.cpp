@@ -146,19 +146,26 @@ void Output(struPerson* pStart, int amountElements) {
 
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
-	//TODO: Warum werden Werte nicht passend sortiert
+	//BUG: Wieso werden andere Daten minteinander gewechselt?
+	//TODO: Falls Nachname gleich ist, sollte Vorname als zweite Argument nehmen
+	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
+	char temp;
 
-	for (pStart; pStart != NULL; pStart = pStart->pNext) 
+	for (ipStart = pStart; ipStart->pNext != NULL; ipStart = ipStart->pNext)
 	{
-		if (pStart->pData->Nachname[0] > pStart->pPrev->pData->Nachname[0])
-		{
-			pStart->pData->Nachname[0] = pStart->pPrev->pData->Nachname[0];
-			pStart->pPrev->pData->Nachname[0] = pStart->pData->Nachname[0];
+		for (jpStart = ipStart->pNext; jpStart != NULL; jpStart = jpStart->pNext) {
+			if (ipStart->pData->Nachname[0] > jpStart->pData->Nachname[0]) {
+				temp = ipStart->pData->Nachname[0];
+				ipStart->pData->Nachname[0] = jpStart->pData->Nachname[0];
+				/*i->pData->Vorname[0] = j->pData->Vorname[0];
+				i->pData->Jahrgang = j->pData->Jahrgang;*/
+				jpStart->pData->Nachname[0] = temp;
+			}
 		}
 	}
 
-	printf("Liste wurde per Bubblesort sortiert\n");
-	return pStart;
+	printf("Liste wurde per BubbleSort sortiert\n");
+	return pSortedList = pStart;
 }
 
 // TODO QUICKSORT: Fehler suchen, warum Werte nicht gewechselt werden
