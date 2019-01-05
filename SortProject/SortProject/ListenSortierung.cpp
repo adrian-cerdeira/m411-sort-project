@@ -164,7 +164,6 @@ void swapData(struPerson *ipStart, struPerson *jpStart) {
 
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
-	//TODO: Falls Nachname gleich ist, sollte Vorname als zweite Argument nehmen
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
 
 	for (ipStart = pStart; ipStart->pNext != NULL; ipStart = ipStart->pNext)
@@ -172,6 +171,11 @@ struPerson* BubbleSort(struPerson* pStart) {
 		for (jpStart = ipStart->pNext; jpStart != NULL; jpStart = jpStart->pNext) {
 			if (ipStart->pData->Nachname[0] > jpStart->pData->Nachname[0]) {
 				swapData(ipStart, jpStart);
+			}
+			if (ipStart->pData->Nachname[0] == jpStart->pData->Nachname[0]) {
+				if (ipStart->pData->Vorname[0] > jpStart->pData->Vorname[0]) {
+					swapData(ipStart, jpStart);
+				}
 			}
 		}
 	}
