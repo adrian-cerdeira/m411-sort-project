@@ -144,22 +144,34 @@ void Output(struPerson* pStart, int amountElements) {
 
 }
 
+//swapData Funktion erstellen: Adrian Cerdeira
+void swapData(struPerson *ipStart, struPerson *jpStart) {
+	char tempLastName;
+	char tempFirstName;
+	int tempAgeGroup;
+
+	tempLastName = ipStart->pData->Nachname[0];
+	tempFirstName = ipStart->pData->Vorname[0];
+	tempAgeGroup = ipStart->pData->Jahrgang;
+	ipStart->pData->Nachname[0] = jpStart->pData->Nachname[0];
+	ipStart->pData->Vorname[0] = jpStart->pData->Vorname[0];
+	ipStart->pData->Jahrgang = jpStart->pData->Jahrgang;
+	jpStart->pData->Nachname[0] = tempLastName;
+	jpStart->pData->Vorname[0] = tempFirstName;
+	jpStart->pData->Jahrgang = tempAgeGroup;
+}
+
+
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
-	//BUG: Wieso werden andere Daten minteinander gewechselt?
 	//TODO: Falls Nachname gleich ist, sollte Vorname als zweite Argument nehmen
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
-	char temp;
 
 	for (ipStart = pStart; ipStart->pNext != NULL; ipStart = ipStart->pNext)
 	{
 		for (jpStart = ipStart->pNext; jpStart != NULL; jpStart = jpStart->pNext) {
 			if (ipStart->pData->Nachname[0] > jpStart->pData->Nachname[0]) {
-				temp = ipStart->pData->Nachname[0];
-				ipStart->pData->Nachname[0] = jpStart->pData->Nachname[0];
-				/*i->pData->Vorname[0] = j->pData->Vorname[0];
-				i->pData->Jahrgang = j->pData->Jahrgang;*/
-				jpStart->pData->Nachname[0] = temp;
+				swapData(ipStart, jpStart);
 			}
 		}
 	}
