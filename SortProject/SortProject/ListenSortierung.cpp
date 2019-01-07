@@ -70,22 +70,38 @@ struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[])
 	}
 }
 
-//deleteElement Funktion erstellen: Adrian Cerdeira
+//deleteElement Funktion erstellen: Mario Forrer und Adrian Cerdeira
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	struPerson* pCurrent = pStart;
-	struPerson* pNewList = NULL;
-
-	// TODO: Delete Element correctly and return new List
-	while (pCurrent != NULL) {
-		struPerson* pDel = pCurrent;
-		if (pDel == pSearchElement) {
-			pCurrent->pPrev = pDel->pNext;
-			free(pSearchElement);
+	struPerson* pDeleteElement = NULL;
+	if (pStart == pSearchElement) {
+		pDeleteElement = pStart;
+		free(pDeleteElement->pData);
+		pStart = pStart->pNext;
+		pStart->pPrev = NULL;
+		free(pDeleteElement);
+		return pStart;
+	}
+	
+	while (pCurrent->pNext != NULL) {	
+		if (pCurrent == pSearchElement) {
+			pDeleteElement = pCurrent;
+			free(pDeleteElement->pData);
+			pCurrent = pCurrent->pPrev;
+			pCurrent->pNext = pDeleteElement->pNext;
+			pCurrent->pNext->pPrev = pCurrent;
+			free(pDeleteElement);
+			return pStart;
 		}
-		pDel = pDel->pNext;
+		pCurrent = pCurrent->pNext;
 	}
 
-	return pNewList;
+	pDeleteElement = pCurrent;
+	free(pDeleteElement->pData);
+	pCurrent = pCurrent->pPrev;
+	pCurrent->pNext = NULL;
+	free(pDeleteElement);
+	return pStart;
 }
 
 // Counter-Funktion erstellen: Adrian Cerdeira
@@ -190,17 +206,17 @@ struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 	struPerson* pPivot = pHigh;
 	struPerson* pI = pLow;
 	short int state = 0; // 0 = Not done 1 = Checked 
-//	if (pI->pPrev != NULL) pI = pI->pPrev;
+						 //	if (pI->pPrev != NULL) pI = pI->pPrev;
 
 	for (struPerson* pWork = pLow; pWork != pHigh; pWork = pWork->pNext) {
 		state = 0;
 		for (int j = 0; pWork->pData->Nachname[j] != '\0' && pPivot->pData->Nachname[j] != '\0'; j++) {
-//			printf("\n----\nQuickSort: Nachname Loop, start");
+			//			printf("\n----\nQuickSort: Nachname Loop, start");
 			if (state == 0) {
-//				printf("\n----\nQuickSort: Nachname Loop, inside state");
+				//				printf("\n----\nQuickSort: Nachname Loop, inside state");
 				if (pWork->pData->Nachname[j] == pPivot->pData->Nachname[j]);
 				else if (pWork->pData->Nachname[j] < pPivot->pData->Nachname[j]) {
-	//				printf("\n----\nQuickSort: Nachname Loop, Work smaller as Pivot");
+					//				printf("\n----\nQuickSort: Nachname Loop, Work smaller as Pivot");
 					if (pI->pPrev != NULL) pI = pI->pPrev;
 					struData* pTemp = pI->pData;
 					pI->pData = pWork->pData;
@@ -209,20 +225,20 @@ struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 				}
 				else if (pWork->pData->Nachname[j] > pPivot->pData->Nachname[j]) {
 					state = 1;
-//					printf("\n----\nQuickSort: Nachname Loop, Work bigger as Pivot");
+					//					printf("\n----\nQuickSort: Nachname Loop, Work bigger as Pivot");
 				}
-					
+
 			}
 		}
 
 		if (state == 0) {
 			for (int j = 0; pWork->pData->Vorname[j] != '\0' && pPivot->pData->Vorname[j] != '\0'; j++) {
-//				printf("\n----\nQuickSort: Vorname Loop, start");
+				//				printf("\n----\nQuickSort: Vorname Loop, start");
 				if (state == 0) {
-//					printf("\n----\nQuickSort: Vorname Loop, inside State");
+					//					printf("\n----\nQuickSort: Vorname Loop, inside State");
 					if (pWork->pData->Vorname[j] == pPivot->pData->Vorname[j]);
 					else if (pWork->pData->Vorname[j] < pPivot->pData->Vorname[j]) {
-//						printf("\n----\nQuickSort: Vorname Loop, Work smaller as Pivot");
+						//						printf("\n----\nQuickSort: Vorname Loop, Work smaller as Pivot");
 						if (pI->pPrev != NULL) pI = pI->pPrev;
 						struData* pTemp = pI->pData;
 						pI->pData = pWork->pData;
@@ -230,10 +246,10 @@ struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 						state = 1;
 					}
 					else if (pWork->pData->Vorname[j] > pPivot->pData->Vorname[j]) {
-//						printf("\n----\nQuickSort: Nachname Loop, Work bigger as Pivot");
+						//						printf("\n----\nQuickSort: Nachname Loop, Work bigger as Pivot");
 						state = 1;
 					}
-						
+
 				}
 			}
 		}
@@ -297,7 +313,7 @@ int main() {
 	char inputSort;
 	char inputFirstName[40];
 	char inputLastName[40];
-;
+	;
 	while (true) {
 		if (pStart != NULL) {
 			// TODO: Restliche verlangte Funktionen einbauen
@@ -307,7 +323,7 @@ int main() {
 			{
 			case 's':
 				printf("M%cchten Sie per Quicksort sortieren(J/N):\n", oe);
-				scanf("%s", &inputSort); 
+				scanf("%s", &inputSort);
 				inputSort == 'J' ? pStart = QuickSortPrep(pStart) : pStart = BubbleSort(pStart);
 				break;
 			case 'd':
@@ -323,13 +339,12 @@ int main() {
 				// Listenauswahl
 				break;
 			case 'e':
-				// TODO: With get_s falls möglich
+				// TODO: With get_s falls mÃ¶glich
 				printf("Name:\n");
 				scanf("%s", &inputLastName[0]);
 
 				printf("Vorname:\n");
 				scanf("%s", &inputFirstName[0]);
-
 				pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
 				if (pSearchElement != NULL) {
 					pStart = deleteElement(pStart, pSearchElement);
@@ -344,7 +359,7 @@ int main() {
 				system("@cls||clear");
 				break;
 			case 'x':
-				//ERROR: Falls s ausgewählt wird, sollte das Programm auch beenden werden können
+				//ERROR: Falls s ausgewÃ¤hlt wird, sollte das Programm auch beenden werden kÃ¶nnen
 				return 0;
 				break;
 			default:
