@@ -60,17 +60,18 @@ struPerson* Create(const int Anzahl) {
 
 //searchElement Funktion erstellen: Adrian Cerdeira
 struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[]) {
-	struPerson* pSearch = NULL;
-	while (pStart != NULL) {
-		bool isFirstNameAndLastName = pStart->pData->Nachname[0] == lastName[0] && pStart->pData->Vorname[0] == firstName[0];
+	struPerson* pSearch = pStart;
+	while (pSearch != NULL) {
+		bool isFirstNameAndLastName = pSearch->pData->Nachname[0] == lastName[0] && pSearch->pData->Vorname[0] == firstName[0];
 		if (isFirstNameAndLastName) {
-			return pSearch = pStart;
+			return pSearch;
 		}
-		pStart = pStart->pNext;
+		pSearch = pSearch->pNext;
 	}
+	return NULL;
 }
 
-//deleteElement Funktion erstellen: Mario Forrer und Adrian Cerdeira
+//deleteElement Funktion erstellen: Adrian Cerdeira und Mario Forrer
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	struPerson* pCurrent = pStart;
 	struPerson* pDeleteElement = NULL;
@@ -101,6 +102,34 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	pCurrent = pCurrent->pPrev;
 	pCurrent->pNext = NULL;
 	free(pDeleteElement);
+	return pStart;
+}
+
+struPerson* deleteElementPrep(struPerson *pStart) {
+	char inputFirstName[40];
+	char inputLastName[40];
+	int count = 0;
+	struPerson *pSearchElement = NULL;
+	// TODO: With get_s falls möglich
+	printf("Name:\n");
+	scanf("%s", &inputLastName[0]);
+
+	printf("Vorname:\n");
+	scanf("%s", &inputFirstName[0]);
+	pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
+	if (pSearchElement != NULL) {
+
+		while (pSearchElement != NULL) {
+			pStart = deleteElement(pStart, pSearchElement);
+			count++;
+			pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
+		}
+		printf("%i Elemente wurden gel%cscht\n", count,  oe);
+	}
+	else {
+		printf("Element wurde nicht gefunden oder konnte nicht gel%cscht werden\n", oe);
+	}
+
 	return pStart;
 }
 
@@ -306,13 +335,12 @@ struPerson* createList(struPerson *pStart) {
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
 	struPerson* pStart = NULL;
-	struPerson *pSearchElement = NULL;
+
 
 	char input;
 	int  inputAmoutElements = 0;
 	char inputSort;
-	char inputFirstName[40];
-	char inputLastName[40];
+
 	;
 	while (true) {
 		if (pStart != NULL) {
@@ -339,27 +367,14 @@ int main() {
 				// Listenauswahl
 				break;
 			case 'e':
-				// TODO: With get_s falls möglich
-				printf("Name:\n");
-				scanf("%s", &inputLastName[0]);
-
-				printf("Vorname:\n");
-				scanf("%s", &inputFirstName[0]);
-				pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
-				if (pSearchElement != NULL) {
-					pStart = deleteElement(pStart, pSearchElement);
-					printf("Element/Elemente wurde/n gel%cscht\n", oe);
-				}
-				else {
-					printf("Element wurde nicht gefunden oder konnte nicht gel%cscht werden\n", oe);
-				}
-
+				deleteElementPrep(pStart);
 				break;
 			case 'r':
 				system("@cls||clear");
 				break;
 			case 'x':
 				//ERROR: Falls s ausgewählt wird, sollte das Programm auch beenden werden können
+				exit(0);
 				return 0;
 				break;
 			default:
