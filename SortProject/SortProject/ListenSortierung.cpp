@@ -3,6 +3,7 @@
 // Umlaute definieren
 #define ue (unsigned char)129
 #define oe (unsigned char)148
+//TODO ae definieren!
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -160,7 +161,10 @@ void putDataToConsole(struPerson* pOut, int elementNumber) {
 }
 
 //Output Funktion erstellen: Mario Forrer
-void Output(struPerson* pStart, int amountElements) {
+void Output(struPerson* pStart) {
+	int  amountElements = 0;
+	printf("Wie viele Elemente m%cchten Sie ausgeben? (0 = Alle)\n", oe);
+	scanf("%i", amountElements);
 	if (pStart != NULL) {
 		if (amountElements != 0) {
 			int existingElements = countElements(pStart);
@@ -189,37 +193,26 @@ void Output(struPerson* pStart, int amountElements) {
 
 }
 
-//swapData Funktion erstellen: Adrian Cerdeira
-void swapData(struPerson *ipStart, struPerson *jpStart) {
-	char tempLastName;
-	char tempFirstName;
-	int tempAgeGroup;
 
-	tempLastName = ipStart->pData->Nachname[0];
-	tempFirstName = ipStart->pData->Vorname[0];
-	tempAgeGroup = ipStart->pData->Jahrgang;
-	ipStart->pData->Nachname[0] = jpStart->pData->Nachname[0];
-	ipStart->pData->Vorname[0] = jpStart->pData->Vorname[0];
-	ipStart->pData->Jahrgang = jpStart->pData->Jahrgang;
-	jpStart->pData->Nachname[0] = tempLastName;
-	jpStart->pData->Vorname[0] = tempFirstName;
-	jpStart->pData->Jahrgang = tempAgeGroup;
-}
 
 
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
-
+	struData* pTemp = NULL;
 	for (ipStart = pStart; ipStart->pNext != NULL; ipStart = ipStart->pNext)
 	{
 		for (jpStart = ipStart->pNext; jpStart != NULL; jpStart = jpStart->pNext) {
 			if (ipStart->pData->Nachname[0] > jpStart->pData->Nachname[0]) {
-				swapData(ipStart, jpStart);
+				pTemp = ipStart->pData;
+				ipStart->pData = jpStart->pData;
+				jpStart->pData = pTemp;
 			}
 			if (ipStart->pData->Nachname[0] == jpStart->pData->Nachname[0]) {
 				if (ipStart->pData->Vorname[0] > jpStart->pData->Vorname[0]) {
-					swapData(ipStart, jpStart);
+					pTemp = ipStart->pData;
+					ipStart->pData = jpStart->pData;
+					jpStart->pData = pTemp;
 				}
 			}
 		}
@@ -331,6 +324,27 @@ struPerson* createList(struPerson *pStart) {
 
 	return pStart;
 }
+// sortPrep Funktion erstellen: Mario Forrer
+struPerson* sortPrep(struPerson *pStart) {
+	while (true) {
+		char input;
+		printf("\nBitte w%chlen Sie Ihr gewünschtes Sortierverfahren aus. Verfügbare Sortierverfahren: Quicksort(q),Bubblesort(s)", ae);
+		input = getchar();
+		// Um Buffer zu leeren
+		fseek(stdin, 0, SEEK_END);
+		if (input == 'q' or input == 'Q') {
+			pStart = QuickSortPrep(pStart);
+			break;
+		}
+		else if (input == 's' or input == 'S') {
+			pStart = BubbleSort(pStart);
+			break;
+		}
+		else printf("Ihre Eingabe ist nicht gültig. Bitte versuchen sie es erneut");
+	}
+	return pStart;
+
+}
 
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
@@ -338,42 +352,45 @@ int main() {
 
 
 	char input;
-	int  inputAmoutElements = 0;
-	char inputSort;
+
 
 	;
 	while (true) {
 		if (pStart != NULL) {
 			// TODO: Restliche verlangte Funktionen einbauen
 			printf("Was m%cchten Sie tun?: Liste sortieren(s), Liste l%cschen(d), Element l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
-			scanf("%c", &input);
+			input = getchar();
+			// Um Buffer zu leeren
+			fseek(stdin, 0, SEEK_END);
 			switch (input)
 			{
 			case 's':
-				printf("M%cchten Sie per Quicksort sortieren(J/N):\n", oe);
-				scanf("%s", &inputSort);
-				inputSort == 'J' ? pStart = QuickSortPrep(pStart) : pStart = BubbleSort(pStart);
+			case 'S':
+				sortPrep(pStart);
 				break;
 			case 'd':
+			case 'D':
 				pStart = NULL;
 				printf("Liste gel%cscht\n", oe);
 				break;
 			case 'a':
-				printf("Wie viele Elemente m%cchten Sie ausgeben? (0 = Alle)\n", oe);
-				scanf("%i", &inputAmoutElements);
-				Output(pStart, inputAmoutElements);
+			case 'A':
+				Output(pStart);
 				break;
 			case 'l':
+			case 'L':
 				// Listenauswahl
 				break;
 			case 'e':
+			case 'E':
 				deleteElementPrep(pStart);
 				break;
 			case 'r':
+			case 'R':
 				system("@cls||clear");
 				break;
 			case 'x':
-				//ERROR: Falls s ausgewählt wird, sollte das Programm auch beenden werden können
+			case 'X':
 				exit(0);
 				return 0;
 				break;
@@ -381,8 +398,6 @@ int main() {
 				printf("Die Eingabe ist Ung%cltig\n", ue);
 				break;
 			}
-			// Um Buffer zu leeren
-			fseek(stdin, 0, SEEK_END);
 		}
 		else {
 			pStart = createList(pStart);
