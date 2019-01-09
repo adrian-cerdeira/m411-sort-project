@@ -3,7 +3,7 @@
 // Umlaute definieren
 #define ue (unsigned char)129
 #define oe (unsigned char)148
-//TODO ae definieren!
+#define ae (unsigned char)132
 //TODO Legalität von umlauten als Globale Variablen abklären!!!
 
 #include "stdio.h"
@@ -66,6 +66,7 @@ struPerson* Create(const int Anzahl) {
 struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[]) {
 	// Filtern, ob das gewünschte Element in der Liste mindestens einmal vorkommt.
 	struPerson* pSearch = pStart;
+
 	while (pSearch != NULL) {
 		bool isFirstNameAndLastName = pSearch->pData->Nachname[0] == lastName[0] && pSearch->pData->Vorname[0] == firstName[0];
 		if (isFirstNameAndLastName) {
@@ -80,6 +81,7 @@ struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[])
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	struPerson* pCurrent = pStart;
 	struPerson* pDeleteElement = NULL;
+
 	//Fall 1: Gewünschtes Element zum Löschen steht an der Spitze
 	if (pStart == pSearchElement) {
 		pDeleteElement = pStart;
@@ -164,7 +166,7 @@ void putDataToConsole(struPerson* pOut, int elementNumber) {
 	printf("\n ---- \nElement:%i\n", elementNumber);
 	printf("Name: %c\n", pCurrent->pData->Nachname[0]);
 	printf("Vorname: %c\n", pCurrent->pData->Vorname[0]);
-	printf("Geburtstag: %i\n", pCurrent->pData->Jahrgang);
+	printf("Jahrgang: %i\n", pCurrent->pData->Jahrgang);
 //	printf("Alter: %i\n", alter);
 }
 
@@ -337,8 +339,7 @@ struPerson* createList(struPerson *pStart) {
 struPerson* sortPrep(struPerson *pStart) {
 	while (true) {
 		char input;
-		//TODO: AE
-		printf("Bitte waehlen Sie Ihr gewünschtes Sortierverfahren aus. Verfügbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n");
+		printf("Bitte w%chlen Sie Ihr gew%cnschtes Sortierverfahren aus. Verf%cgbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n", ae, ue, ue);
 		input = getchar();
 		// Um Buffer zu leeren
 		fseek(stdin, 0, SEEK_END);
