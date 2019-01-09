@@ -4,6 +4,7 @@
 #define ue (unsigned char)129
 #define oe (unsigned char)148
 //TODO ae definieren!
+//TODO Legalität von umlauten als Globale Variablen abklären!!!
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -32,6 +33,7 @@ struPerson* Create(const int Anzahl) {
 	struPerson *pPrevious = NULL;
 
 	for (int i = 0; i < Anzahl; i++) {
+		//Befüllen der Daten
 		pCurrent = (struPerson *)malloc(sizeof(struPerson));
 		pCurrent->pData = (struData *)malloc(sizeof(struData));
 
@@ -41,6 +43,7 @@ struPerson* Create(const int Anzahl) {
 		pCurrent->pData->Nachname[1] = '\0';
 		pCurrent->pData->Jahrgang = 1900 + rand() % 118;
 
+		//Aufbauen der Kette
 		if (pPrevious == NULL) {
 			pStart = pCurrent;
 		}
@@ -61,6 +64,7 @@ struPerson* Create(const int Anzahl) {
 
 //searchElement Funktion erstellen: Adrian Cerdeira
 struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[]) {
+	// Filtern, ob das gewünschte Element in der Liste mindestens einmal vorkommt.
 	struPerson* pSearch = pStart;
 	while (pSearch != NULL) {
 		bool isFirstNameAndLastName = pSearch->pData->Nachname[0] == lastName[0] && pSearch->pData->Vorname[0] == firstName[0];
@@ -76,6 +80,7 @@ struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[])
 struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	struPerson* pCurrent = pStart;
 	struPerson* pDeleteElement = NULL;
+	//Fall 1: Gewünschtes Element zum Löschen steht an der Spitze
 	if (pStart == pSearchElement) {
 		pDeleteElement = pStart;
 		free(pDeleteElement->pData);
@@ -84,8 +89,8 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 		free(pDeleteElement);
 		return pStart;
 	}
-	
-	while (pCurrent->pNext != NULL) {	
+	//Fall 2: Gewünschtes Element zum Löschen steht in der Mitte
+	while (pCurrent->pNext != NULL) {
 		if (pCurrent == pSearchElement) {
 			pDeleteElement = pCurrent;
 			free(pDeleteElement->pData);
@@ -98,6 +103,7 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 		pCurrent = pCurrent->pNext;
 	}
 
+	//Fall 3: Gewünschtes Element zum Löschen steht am Ende
 	pDeleteElement = pCurrent;
 	free(pDeleteElement->pData);
 	pCurrent = pCurrent->pPrev;
@@ -106,6 +112,7 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	return pStart;
 }
 
+//deleteElementPrep Funktion erstellen: Mario Forrer
 struPerson* deleteElementPrep(struPerson *pStart) {
 	char inputFirstName[40];
 	char inputLastName[40];
@@ -114,9 +121,10 @@ struPerson* deleteElementPrep(struPerson *pStart) {
 	// TODO: With get_s falls möglich
 	printf("Name:\n");
 	scanf("%s", &inputLastName[0]);
-
 	printf("Vorname:\n");
 	scanf("%s", &inputFirstName[0]);
+	// Jeglichste Elemente mit den Entsprechenden Werten werden gelöscht. Die Anzahl wird gezählt und am Ende ausgegeben.
+	// Bei keinem gefundenen Element wird eine Meldung ausgegeben.
 	pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
 	if (pSearchElement != NULL) {
 
@@ -125,7 +133,7 @@ struPerson* deleteElementPrep(struPerson *pStart) {
 			count++;
 			pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
 		}
-		printf("%i Elemente wurden gel%cscht\n", count,  oe);
+		printf("%i Elemente wurden gel%cscht\n", count, oe);
 	}
 	else {
 		printf("Element wurde nicht gefunden oder konnte nicht gel%cscht werden\n", oe);
@@ -138,7 +146,7 @@ struPerson* deleteElementPrep(struPerson *pStart) {
 int countElements(struPerson* pStart) {
 	int counter = 0;
 	struPerson* pTemp = pStart;
-
+	// Jedes Element wird durchgegangen und gezählt.
 	while (pTemp != NULL) {
 		counter++;
 		pTemp = pTemp->pNext;
@@ -151,26 +159,27 @@ int countElements(struPerson* pStart) {
 void putDataToConsole(struPerson* pOut, int elementNumber) {
 	struPerson *pCurrent = pOut;
 	//TODO: Aktuelles Jahr abfragen
-	int alter = 2018 - pCurrent->pData->Jahrgang;
-
+//	int alter = 2018 - pCurrent->pData->Jahrgang;
+	//Ausgabe eines bestimmten Elementes
 	printf("\n ---- \nElement:%i\n", elementNumber);
 	printf("Name: %c\n", pCurrent->pData->Nachname[0]);
 	printf("Vorname: %c\n", pCurrent->pData->Vorname[0]);
 	printf("Geburtstag: %i\n", pCurrent->pData->Jahrgang);
-	printf("Alter: %i\n", alter);
+//	printf("Alter: %i\n", alter);
 }
 
 //Output Funktion erstellen: Mario Forrer
 void Output(struPerson* pStart) {
 	int  amountElements = 0;
 	printf("Wie viele Elemente m%cchten Sie ausgeben? (0 = Alle)\n", oe);
-	scanf("%i", amountElements);
+	scanf("%i", &amountElements);
+	//Ausgabe der Elemente. Falls die gewünschte Zahl höher ist als die Maximale anzahl, wird eine Meldung ausgegben.
 	if (pStart != NULL) {
 		if (amountElements != 0) {
 			int existingElements = countElements(pStart);
-			if (amountElements < existingElements) {
+			if (amountElements <= existingElements) {
 				int i = 1;
-				for (struPerson* pOut = pStart; i <= amountElements; pOut = pOut->pNext) {
+				for (struPerson* pOut = pStart; i <= amountElements or pOut == NULL; pOut = pOut->pNext) {
 					putDataToConsole(pOut, i);
 					i++;
 				}
@@ -188,7 +197,7 @@ void Output(struPerson* pStart) {
 		}
 	}
 	else {
-		printf("Keine Elemente vorhanden");
+		printf("Keine Elemente vorhanden\n");
 	}
 
 }
@@ -287,7 +296,7 @@ struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 //(QuickSort) QuickSort Funktion erstellen: Mario Forrer
 void QuickSort(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 	if (pLow < pHigh) {
-		printf("\n----\nQuickSort: wholeState if clause, calling Partition");
+		printf("----\nQuickSort: wholeState if clause, calling Partition\n");
 		struPerson* pivot = Partition(pStart, pLow, pHigh);
 
 		QuickSort(pStart, pLow, pivot->pPrev);
@@ -328,10 +337,12 @@ struPerson* createList(struPerson *pStart) {
 struPerson* sortPrep(struPerson *pStart) {
 	while (true) {
 		char input;
-		printf("\nBitte w%chlen Sie Ihr gewünschtes Sortierverfahren aus. Verfügbare Sortierverfahren: Quicksort(q),Bubblesort(s)", ae);
+		//TODO: AE
+		printf("Bitte waehlen Sie Ihr gewünschtes Sortierverfahren aus. Verfügbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n");
 		input = getchar();
 		// Um Buffer zu leeren
 		fseek(stdin, 0, SEEK_END);
+		// Auswahl zwischen den beiden Sortierverfahren Quicksort und Bubblesort.
 		if (input == 'q' or input == 'Q') {
 			pStart = QuickSortPrep(pStart);
 			break;
@@ -340,25 +351,39 @@ struPerson* sortPrep(struPerson *pStart) {
 			pStart = BubbleSort(pStart);
 			break;
 		}
-		else printf("Ihre Eingabe ist nicht gültig. Bitte versuchen sie es erneut");
+		else printf("Ihre Eingabe ist nicht g%cltig. Bitte versuchen sie es erneut\n", ue);
 	}
 	return pStart;
 
 }
 
+// deleteList Funktion erstellen: Mario Forrer
+struPerson* deleteList(struPerson *pStart) {
+	struPerson* pDelete = pStart;
+	pStart = NULL;
+	while (pDelete->pNext != NULL) {
+		pDelete = pDelete->pNext;
+		free(pDelete->pPrev->pData);
+		free(pDelete->pPrev);
+	}
+	free(pDelete->pData);
+	free(pDelete);
+	printf("Liste gel%cscht\n", oe);
+	return pStart;
+}
+
 // Main-Funktion erstellen: Mario Forrer und Adrian Cerdeira
 int main() {
+	//Die Variablen in der Main Funktion wurden auf ein Minimales von 2 dezimiert. Alles andere findet in Übergangsfunktionen statt.
+	//So ist die Main funktion übersichtlich und klein. Das Switch-Case bleibt in der Main Funktion, um eine einfache Übersicht zu gewährleisten.
 	struPerson* pStart = NULL;
-
-
 	char input;
-
-
-	;
 	while (true) {
 		if (pStart != NULL) {
+			// Um Buffer zu leeren
+			fseek(stdin, 0, SEEK_END);
 			// TODO: Restliche verlangte Funktionen einbauen
-			printf("Was m%cchten Sie tun?: Liste sortieren(s), Liste l%cschen(d), Element l%cschen (e), Ausgeben(a), Programm beenden(x)\n, Console leeren(r)\n", oe, oe, oe);
+			printf("Was m%cchten Sie tun?: Liste sortieren(s), Liste l%cschen(d), Element l%cschen (e), Ausgeben(a), Programm beenden(x), Console leeren(r)\n", oe, oe, oe);
 			input = getchar();
 			// Um Buffer zu leeren
 			fseek(stdin, 0, SEEK_END);
@@ -366,12 +391,11 @@ int main() {
 			{
 			case 's':
 			case 'S':
-				sortPrep(pStart);
+				pStart = sortPrep(pStart);
 				break;
 			case 'd':
 			case 'D':
-				pStart = NULL;
-				printf("Liste gel%cscht\n", oe);
+				pStart = deleteList(pStart);
 				break;
 			case 'a':
 			case 'A':
@@ -383,7 +407,7 @@ int main() {
 				break;
 			case 'e':
 			case 'E':
-				deleteElementPrep(pStart);
+				pStart = deleteElementPrep(pStart);
 				break;
 			case 'r':
 			case 'R':
