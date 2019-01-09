@@ -91,6 +91,7 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 		free(pDeleteElement);
 		return pStart;
 	}
+
 	//Fall 2: Gewünschtes Element zum Löschen steht in der Mitte
 	while (pCurrent->pNext != NULL) {
 		if (pCurrent == pSearchElement) {
@@ -116,15 +117,17 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 
 //deleteElementPrep Funktion erstellen: Mario Forrer
 struPerson* deleteElementPrep(struPerson *pStart) {
+	struPerson *pSearchElement = NULL;
 	char inputFirstName[40];
 	char inputLastName[40];
 	int count = 0;
-	struPerson *pSearchElement = NULL;
+
 	// TODO: With get_s falls möglich
 	printf("Name:\n");
 	scanf("%s", &inputLastName[0]);
 	printf("Vorname:\n");
 	scanf("%s", &inputFirstName[0]);
+
 	// Jeglichste Elemente mit den Entsprechenden Werten werden gelöscht. Die Anzahl wird gezählt und am Ende ausgegeben.
 	// Bei keinem gefundenen Element wird eine Meldung ausgegeben.
 	pSearchElement = searchElement(pStart, inputLastName, inputFirstName);
@@ -148,26 +151,24 @@ struPerson* deleteElementPrep(struPerson *pStart) {
 int countElements(struPerson* pStart) {
 	int counter = 0;
 	struPerson* pTemp = pStart;
+
 	// Jedes Element wird durchgegangen und gezählt.
 	while (pTemp != NULL) {
 		counter++;
 		pTemp = pTemp->pNext;
 	};
-
 	return counter;
 }
 
 // putDataToConsole Funktion erstellen: Adrian Cerdeira
 void putDataToConsole(struPerson* pOut, int elementNumber) {
 	struPerson *pCurrent = pOut;
-	//TODO: Aktuelles Jahr abfragen
-//	int alter = 2018 - pCurrent->pData->Jahrgang;
+
 	//Ausgabe eines bestimmten Elementes
 	printf("\n ---- \nElement:%i\n", elementNumber);
 	printf("Name: %c\n", pCurrent->pData->Nachname[0]);
 	printf("Vorname: %c\n", pCurrent->pData->Vorname[0]);
 	printf("Jahrgang: %i\n", pCurrent->pData->Jahrgang);
-//	printf("Alter: %i\n", alter);
 }
 
 //Output Funktion erstellen: Mario Forrer
@@ -175,13 +176,14 @@ void Output(struPerson* pStart) {
 	int  amountElements = 0;
 	printf("Wie viele Elemente m%cchten Sie ausgeben? (0 = Alle)\n", oe);
 	scanf("%i", &amountElements);
+
 	//Ausgabe der Elemente. Falls die gewünschte Zahl höher ist als die Maximale anzahl, wird eine Meldung ausgegben.
 	if (pStart != NULL) {
 		if (amountElements != 0) {
 			int existingElements = countElements(pStart);
 			if (amountElements <= existingElements) {
 				int i = 1;
-				for (struPerson* pOut = pStart; i <= amountElements or pOut == NULL; pOut = pOut->pNext) {
+				for (struPerson* pOut = pStart; i <= amountElements || pOut == NULL; pOut = pOut->pNext) {
 					putDataToConsole(pOut, i);
 					i++;
 				}
@@ -211,6 +213,7 @@ void Output(struPerson* pStart) {
 struPerson* BubbleSort(struPerson* pStart) {
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
 	struData* pTemp = NULL;
+
 	for (ipStart = pStart; ipStart->pNext != NULL; ipStart = ipStart->pNext)
 	{
 		for (jpStart = ipStart->pNext; jpStart != NULL; jpStart = jpStart->pNext) {
@@ -341,34 +344,44 @@ struPerson* sortPrep(struPerson *pStart) {
 		char input;
 		printf("Bitte w%chlen Sie Ihr gew%cnschtes Sortierverfahren aus. Verf%cgbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n", ae, ue, ue);
 		input = getchar();
+
 		// Um Buffer zu leeren
 		fseek(stdin, 0, SEEK_END);
+
 		// Auswahl zwischen den beiden Sortierverfahren Quicksort und Bubblesort.
-		if (input == 'q' or input == 'Q') {
+		bool isQuickSortSelected = input == 'q' || input == 'Q';
+		bool isBubbleSortSelected = input == 's' || input == 'S';
+
+		if (isQuickSortSelected) {
 			pStart = QuickSortPrep(pStart);
 			break;
 		}
-		else if (input == 's' or input == 'S') {
+		else if (isBubbleSortSelected) {
 			pStart = BubbleSort(pStart);
 			break;
 		}
-		else printf("Ihre Eingabe ist nicht g%cltig. Bitte versuchen sie es erneut\n", ue);
+		else {
+			printf("Ihre Eingabe ist nicht g%cltig. Bitte versuchen sie es erneut\n", ue);
+		}
 	}
-	return pStart;
 
+	return pStart;
 }
 
 // deleteList Funktion erstellen: Mario Forrer
 struPerson* deleteList(struPerson *pStart) {
 	struPerson* pDelete = pStart;
 	pStart = NULL;
+
 	while (pDelete->pNext != NULL) {
 		pDelete = pDelete->pNext;
 		free(pDelete->pPrev->pData);
 		free(pDelete->pPrev);
 	}
+
 	free(pDelete->pData);
 	free(pDelete);
+
 	printf("Liste gel%cscht\n", oe);
 	return pStart;
 }
@@ -379,15 +392,19 @@ int main() {
 	//So ist die Main funktion übersichtlich und klein. Das Switch-Case bleibt in der Main Funktion, um eine einfache Übersicht zu gewährleisten.
 	struPerson* pStart = NULL;
 	char input;
+
 	while (true) {
 		if (pStart != NULL) {
 			// Um Buffer zu leeren
 			fseek(stdin, 0, SEEK_END);
+
 			// TODO: Restliche verlangte Funktionen einbauen
 			printf("Was m%cchten Sie tun?: Liste sortieren(s), Liste l%cschen(d), Element l%cschen (e), Ausgeben(a), Programm beenden(x), Console leeren(r)\n", oe, oe, oe);
 			input = getchar();
+
 			// Um Buffer zu leeren
 			fseek(stdin, 0, SEEK_END);
+
 			switch (input)
 			{
 			case 's':
