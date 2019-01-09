@@ -206,9 +206,6 @@ void Output(struPerson* pStart) {
 
 }
 
-
-
-
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
@@ -338,6 +335,7 @@ struPerson* createList(struPerson *pStart) {
 
 	return pStart;
 }
+
 // sortPrep Funktion erstellen: Mario Forrer
 struPerson* sortPrep(struPerson *pStart) {
 	while (true) {
