@@ -206,6 +206,9 @@ void Output(struPerson* pStart) {
 
 }
 
+
+
+
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
@@ -335,10 +338,8 @@ struPerson* createList(struPerson *pStart) {
 
 	return pStart;
 }
-
 // sortPrep Funktion erstellen: Mario Forrer
-struPerson* sortPrep(struPerson *pStart) {
-	while (true) {
+struPerson* sortPrep(struPerson *pStart) {	
 		char input;
 		printf("Bitte w%chlen Sie Ihr gew%cnschtes Sortierverfahren aus. Verf%cgbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n", ae, ue, ue);
 		input = getchar();
@@ -346,23 +347,20 @@ struPerson* sortPrep(struPerson *pStart) {
 		// Um Buffer zu leeren
 		fseek(stdin, 0, SEEK_END);
 
-		// Auswahl zwischen den beiden Sortierverfahren Quicksort und Bubblesort.
-		bool isQuickSortSelected = input == 'q' || input == 'Q';
-		bool isBubbleSortSelected = input == 's' || input == 'S';
-
-		if (isQuickSortSelected) {
+		switch (input) {
+		case 'q':
+		case 'Q':
 			pStart = QuickSortPrep(pStart);
 			break;
-		}
-		else if (isBubbleSortSelected) {
+		case 's':
+		case 'S':
 			pStart = BubbleSort(pStart);
 			break;
-		}
-		else {
+		default:
 			printf("Ihre Eingabe ist nicht g%cltig. Bitte versuchen sie es erneut\n", ue);
+			break;
 		}
-	}
-
+	
 	return pStart;
 }
 
