@@ -1,6 +1,5 @@
 // Catch Error of scanf
 #define _CRT_SECURE_NO_WARNINGS
-
 // Umlaute definieren
 #define ue (unsigned char)129
 #define oe (unsigned char)148
@@ -75,7 +74,6 @@ struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[])
 		}
 		pSearch = pSearch->pNext;
 	}
-
 	return NULL;
 }
 
@@ -114,7 +112,6 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	pCurrent = pCurrent->pPrev;
 	pCurrent->pNext = NULL;
 	free(pDeleteElement);
-
 	return pStart;
 }
 
@@ -150,7 +147,7 @@ struPerson* deleteElementPrep(struPerson *pStart) {
 	return pStart;
 }
 
-// countElements-Funktion erstellen: Adrian Cerdeira
+// Counter-Funktion erstellen: Adrian Cerdeira
 int countElements(struPerson* pStart) {
 	int counter = 0;
 	struPerson* pTemp = pStart;
@@ -209,6 +206,9 @@ void Output(struPerson* pStart) {
 
 }
 
+
+
+
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
 	struPerson* ipStart = NULL, *jpStart = NULL, *pSortedList = NULL;
@@ -236,76 +236,67 @@ struPerson* BubbleSort(struPerson* pStart) {
 	return pSortedList = pStart;
 }
 
+//compareEP (Compare Element Position) Funktion erstellen: Mario Forrer
+bool compareEP(struPerson* pL, struPerson* pH ){
+	struPerson* pLower = pL;
+	struPerson* pHigher = pH;
+	while (pLower != NULL) {
+		if (pLower == pHigher) {
+			return true;
+		}
+		pLower = pLower->pNext;
+	}
+	return false;
+
+}
+
 // TODO QUICKSORT: Fehler suchen, warum Werte nicht gewechselt werden
 //(QuickSort) Partition Funktion erstellen: Mario Forrer
 struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 	struPerson* pPivot = pHigh;
 	struPerson* pI = pLow;
-	short int state = 0; // 0 = Not done 1 = Checked 
-						 //	if (pI->pPrev != NULL) pI = pI->pPrev;
 
-	for (struPerson* pWork = pLow; pWork != pHigh; pWork = pWork->pNext) {
-		state = 0;
-		for (int j = 0; pWork->pData->Nachname[j] != '\0' && pPivot->pData->Nachname[j] != '\0'; j++) {
-			//			printf("\n----\nQuickSort: Nachname Loop, start");
-			if (state == 0) {
-				//				printf("\n----\nQuickSort: Nachname Loop, inside state");
-				if (pWork->pData->Nachname[j] == pPivot->pData->Nachname[j]);
-				else if (pWork->pData->Nachname[j] < pPivot->pData->Nachname[j]) {
-					//				printf("\n----\nQuickSort: Nachname Loop, Work smaller as Pivot");
-					if (pI->pPrev != NULL) pI = pI->pPrev;
-					struData* pTemp = pI->pData;
-					pI->pData = pWork->pData;
-					pWork->pData = pTemp;
-					state = 1;
-				}
-				else if (pWork->pData->Nachname[j] > pPivot->pData->Nachname[j]) {
-					state = 1;
-					//					printf("\n----\nQuickSort: Nachname Loop, Work bigger as Pivot");
-				}
+	for (struPerson* pWork = pLow; compareEP(pWork, pHigh); pWork = pWork->pNext) {
 
-			}
+//		printf("\n----\nQuickSort: Loop again");
+		int compareNa = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
+		if (0 > compareNa) {
+//			printf("\n----\nQuickSort:Nachname anders");
+			pI = pI->pNext;
+			struData* pTemp = pI->pData;
+			pI->pData = pWork->pData;
+			pWork->pData = pTemp;
+			
 		}
-
-		if (state == 0) {
-			for (int j = 0; pWork->pData->Vorname[j] != '\0' && pPivot->pData->Vorname[j] != '\0'; j++) {
-				//				printf("\n----\nQuickSort: Vorname Loop, start");
-				if (state == 0) {
-					//					printf("\n----\nQuickSort: Vorname Loop, inside State");
-					if (pWork->pData->Vorname[j] == pPivot->pData->Vorname[j]);
-					else if (pWork->pData->Vorname[j] < pPivot->pData->Vorname[j]) {
-						//						printf("\n----\nQuickSort: Vorname Loop, Work smaller as Pivot");
-						if (pI->pPrev != NULL) pI = pI->pPrev;
-						struData* pTemp = pI->pData;
-						pI->pData = pWork->pData;
-						pWork->pData = pTemp;
-						state = 1;
-					}
-					else if (pWork->pData->Vorname[j] > pPivot->pData->Vorname[j]) {
-						//						printf("\n----\nQuickSort: Nachname Loop, Work bigger as Pivot");
-						state = 1;
-					}
-
-				}
+		else if (0 < compareNa);
+		else {
+			int compareVo = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
+			if (0 > compareVo) {
+//				printf("\n----\nQuickSort: Vorname anders");
+				pI = pI->pNext;
+				struData* pTemp = pI->pData;
+				pI->pData = pWork->pData;
+				pWork->pData = pTemp;
+				
 			}
 		}
 	}
 
 	struData* pTemp = pI->pData;
-	pI->pData = pPivot->pData;
-	pPivot->pData = pTemp;
+	pI->pData = pHigh->pData;
+	pHigh->pData = pTemp;
 
-	return pI;
+	return pI->pNext;
 }
 
 //(QuickSort) QuickSort Funktion erstellen: Mario Forrer
 void QuickSort(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
-	if (pLow < pHigh) {
+	if (compareEP(pLow, pHigh)) {
 		printf("----\nQuickSort: wholeState if clause, calling Partition\n");
 		struPerson* pivot = Partition(pStart, pLow, pHigh);
 
-		QuickSort(pStart, pLow, pivot->pPrev);
-		QuickSort(pStart, pivot->pNext, pHigh);
+		QuickSort(pStart, pLow, pivot);
+		QuickSort(pStart, pivot, pHigh);
 	}
 }
 
@@ -338,7 +329,6 @@ struPerson* createList(struPerson *pStart) {
 
 	return pStart;
 }
-
 // sortPrep Funktion erstellen: Mario Forrer
 struPerson* sortPrep(struPerson *pStart) {	
 		char input;
@@ -415,6 +405,10 @@ int main() {
 			case 'a':
 			case 'A':
 				Output(pStart);
+				break;
+			case 'l':
+			case 'L':
+				// Listenauswahl
 				break;
 			case 'e':
 			case 'E':
