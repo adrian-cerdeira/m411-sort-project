@@ -1,5 +1,6 @@
 // Catch Error of scanf
 #define _CRT_SECURE_NO_WARNINGS
+
 // Umlaute definieren
 #define ue (unsigned char)129
 #define oe (unsigned char)148
@@ -74,6 +75,7 @@ struPerson* searchElement(struPerson *pStart, char lastName[], char firstName[])
 		}
 		pSearch = pSearch->pNext;
 	}
+
 	return NULL;
 }
 
@@ -112,6 +114,7 @@ struPerson* deleteElement(struPerson *pStart, struPerson *pSearchElement) {
 	pCurrent = pCurrent->pPrev;
 	pCurrent->pNext = NULL;
 	free(pDeleteElement);
+
 	return pStart;
 }
 
@@ -147,7 +150,7 @@ struPerson* deleteElementPrep(struPerson *pStart) {
 	return pStart;
 }
 
-// Counter-Funktion erstellen: Adrian Cerdeira
+// countElements-Funktion erstellen: Adrian Cerdeira
 int countElements(struPerson* pStart) {
 	int counter = 0;
 	struPerson* pTemp = pStart;
@@ -205,9 +208,6 @@ void Output(struPerson* pStart) {
 	}
 
 }
-
-
-
 
 //Bubblesort Funktion erstellen: Adrian Cerdeira
 struPerson* BubbleSort(struPerson* pStart) {
@@ -338,6 +338,7 @@ struPerson* createList(struPerson *pStart) {
 
 	return pStart;
 }
+
 // sortPrep Funktion erstellen: Mario Forrer
 struPerson* sortPrep(struPerson *pStart) {	
 		char input;
@@ -414,10 +415,6 @@ int main() {
 			case 'a':
 			case 'A':
 				Output(pStart);
-				break;
-			case 'l':
-			case 'L':
-				// Listenauswahl
 				break;
 			case 'e':
 			case 'E':
