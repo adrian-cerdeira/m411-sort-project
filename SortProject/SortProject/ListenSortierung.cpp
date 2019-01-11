@@ -255,32 +255,42 @@ bool compareEP(struPerson* pL, struPerson* pH ){
 struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
 	struPerson* pPivot = pHigh;
 	struPerson* pI = pLow;
+	struPerson* pLeft = pLow;
+	struPerson* pRight = pHigh->pPrev;
+	
 
-	for (struPerson* pWork = pLow; compareEP(pWork, pHigh); pWork = pWork->pNext) {
+	while (compareEP(pLeft, pRight)) {
+		int compareLN= strcmp(pLeft->pData->Nachname, pPivot->pData->Nachname);
 
-//		printf("\n----\nQuickSort: Loop again");
-		int compareNa = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
-		if (0 > compareNa) {
-//			printf("\n----\nQuickSort:Nachname anders");
-			pI = pI->pNext;
-			struData* pTemp = pI->pData;
-			pI->pData = pWork->pData;
-			pWork->pData = pTemp;
-			
-		}
-		else if (0 < compareNa);
-		else {
-			int compareVo = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
-			if (0 > compareVo) {
-//				printf("\n----\nQuickSort: Vorname anders");
-				pI = pI->pNext;
-				struData* pTemp = pI->pData;
-				pI->pData = pWork->pData;
-				pWork->pData = pTemp;
-				
-			}
-		}
 	}
+
+
+
+//	for (struPerson* pWork = pLow; compareEP(pWork, pHigh); pWork = pWork->pNext) {
+//
+////		printf("\n----\nQuickSort: Loop again");
+//		int compareNa = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
+//		if (0 > compareNa) {
+////			printf("\n----\nQuickSort:Nachname anders");
+//			pI = pI->pNext;
+//			struData* pTemp = pI->pData;
+//			pI->pData = pWork->pData;
+//			pWork->pData = pTemp;
+//			
+//		}
+//		else if (0 < compareNa);
+//		else {
+//			int compareVo = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
+//			if (0 > compareVo) {
+////				printf("\n----\nQuickSort: Vorname anders");
+//				pI = pI->pNext;
+//				struData* pTemp = pI->pData;
+//				pI->pData = pWork->pData;
+//				pWork->pData = pTemp;
+//				
+//			}
+//		}
+//	}
 
 	struData* pTemp = pI->pData;
 	pI->pData = pHigh->pData;
