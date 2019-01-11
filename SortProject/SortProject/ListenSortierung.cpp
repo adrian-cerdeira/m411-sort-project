@@ -233,94 +233,86 @@ struPerson* BubbleSort(struPerson* pStart) {
 	return pSortedList = pStart;
 }
 
-//compareEP (Compare Element Position) Funktion erstellen: Mario Forrer
-bool compareEP(struPerson* pL, struPerson* pH ){
-	struPerson* pLower = pL;
-	struPerson* pHigher = pH;
-	while (pLower != NULL) {
-		if (pLower == pHigher) {
-			return true;
-		}
-		pLower = pLower->pNext;
-	}
-	return false;
+//START QUICKSORT
+//Quicksort funktioniert NICHT, mit ausnahme von 10 Elementen. Der Code steht trotzdem
+//für eine Inspektion auskommentiert im Programm. Es soll nicht unbedingt bewertet werden,
+//jedoch wäre ich über eine Rückmeldung für den Fall, dass der Fehler gefunden wurde
+//sehr erfreut.
 
-}
-
-// TODO QUICKSORT: Fehler suchen, warum Werte nicht gewechselt werden
-//(QuickSort) Partition Funktion erstellen: Mario Forrer
-struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
-	struPerson* pPivot = pHigh;
-	struPerson* pI = pLow;
-	struPerson* pLeft = pLow;
-	struPerson* pRight = pHigh->pPrev;
-	
-
-	while (compareEP(pLeft, pRight)) {
-		int compareLN= strcmp(pLeft->pData->Nachname, pPivot->pData->Nachname);
-
-	}
-
-
-
-//	for (struPerson* pWork = pLow; compareEP(pWork, pHigh); pWork = pWork->pNext) {
-//
-////		printf("\n----\nQuickSort: Loop again");
-//		int compareNa = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
-//		if (0 > compareNa) {
-////			printf("\n----\nQuickSort:Nachname anders");
-//			pI = pI->pNext;
-//			struData* pTemp = pI->pData;
-//			pI->pData = pWork->pData;
-//			pWork->pData = pTemp;
-//			
-//		}
-//		else if (0 < compareNa);
-//		else {
-//			int compareVo = strcmp(pWork->pData->Nachname, pPivot->pData->Nachname);
-//			if (0 > compareVo) {
-////				printf("\n----\nQuickSort: Vorname anders");
-//				pI = pI->pNext;
-//				struData* pTemp = pI->pData;
-//				pI->pData = pWork->pData;
-//				pWork->pData = pTemp;
-//				
-//			}
+////(QUICKSORT) compareEP (Compare Element Position) Funktion erstellen: Mario Forrer
+//bool compareEP(struPerson* pL, struPerson* pH) {
+//	struPerson* pLower = pL;
+//	struPerson* pHigher = pH;
+//	while (pLower != NULL) {
+//		pLower = pLower->pNext;
+//		if (pLower == pHigher) {
+//			return true;
 //		}
 //	}
-
-	struData* pTemp = pI->pData;
-	pI->pData = pHigh->pData;
-	pHigh->pData = pTemp;
-
-	return pI->pNext;
-}
-
-//(QuickSort) QuickSort Funktion erstellen: Mario Forrer
-void QuickSort(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
-	if (compareEP(pLow, pHigh)) {
-		printf("----\nQuickSort: wholeState if clause, calling Partition\n");
-		struPerson* pivot = Partition(pStart, pLow, pHigh);
-
-		QuickSort(pStart, pLow, pivot);
-		QuickSort(pStart, pivot, pHigh);
-	}
-}
-
-//(QuickSort) QuickSortPrep Funktion erstellen: Mario Forrer WORKS
-struPerson* QuickSortPrep(struPerson* pStart) {
-	//	int max = countElements(pStart) - 1;
-	struPerson* pLast = pStart;
-	struPerson* pTemp = pStart;
-	while (pTemp != NULL) {
-		pLast = pTemp;
-		pTemp = pTemp->pNext;
-	};
-
-	QuickSort(pStart, pStart, pLast);
-
-	return pStart;
-}
+//	return false;
+//}
+//
+////(QUICKSORT) compareElements Funktion erstellen: Mario Forrer
+//bool compareElements(struData* fI, struData* sI) {
+//	struData* first = fI;
+//	struData* second = sI;
+//		int compareLN = strcmp(first->Nachname, second->Nachname);
+//		if (0 > compareLN) return true;
+//		else if (0 == compareLN) {
+//			int compareLP = strcmp(first->Vorname, second->Vorname);
+//			if (0 > compareLN) return true;
+//		}
+//		return false;
+//
+//}
+//
+////(QUICKSORT) Partition Funktion erstellen: Mario Forrer
+//struPerson* Partition(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
+//	struPerson* pPivot = pLow;
+//	struPerson* pLeft = pLow->pNext;
+//	struPerson* pRight = pHigh;
+//
+//	while (compareEP(pLeft, pRight)) {
+//		while (compareElements(pLeft->pData, pPivot->pData)) pLeft = pLeft->pNext;
+//		while (compareElements(pPivot->pData, pRight->pData)) pRight = pRight->pPrev;
+//		if (compareEP(pLeft, pRight)) {
+//			struData* pTemp1 = pLeft->pData;
+//			pLeft->pData = pRight->pData;
+//			pRight->pData = pTemp1;
+//		}
+//	}
+//
+//		struData* pTemp2 = pRight->pData;
+//		pRight->pData = pPivot->pData;
+//		pPivot->pData = pTemp2;
+//	
+//	return pRight;
+//}
+//
+////(QUICKSORT) QuickSort Funktion erstellen: Mario Forrer
+//void QuickSort(struPerson* pStart, struPerson* pLow, struPerson* pHigh) {
+//	if (compareEP(pLow, pHigh)) {
+//		struPerson* pivot = Partition(pStart, pLow, pHigh);
+//		QuickSort(pStart, pLow, pivot->pPrev);
+//		QuickSort(pStart, pivot->pNext, pHigh);
+//	}
+//}
+//
+////(QUICKSORT) QuickSortPrep Funktion erstellen: Mario Forrer 
+//struPerson* QuickSortPrep(struPerson* pStart) {
+//	//	int max = countElements(pStart) - 1;
+//	struPerson* pLast = pStart;
+//	struPerson* pTemp = pStart;
+//	while (pTemp != NULL) {
+//		pLast = pTemp;
+//		pTemp = pTemp->pNext;
+//	};
+//
+//	QuickSort(pStart, pStart, pLast);
+//
+//	return pStart;
+//}
+// END QUICKSORT
 
 // createList-Funktion erstellen: Adrian Cerdeira
 struPerson* createList(struPerson *pStart) {
@@ -337,28 +329,29 @@ struPerson* createList(struPerson *pStart) {
 	return pStart;
 }
 // sortPrep Funktion erstellen: Mario Forrer
-struPerson* sortPrep(struPerson *pStart) {	
-		char input;
-		printf("Bitte w%chlen Sie Ihr gew%cnschtes Sortierverfahren aus. Verf%cgbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n", ae, ue, ue);
-		input = getchar();
+struPerson* sortPrep(struPerson *pStart) {
+	char input;
+	printf("Bitte w%chlen Sie Ihr gew%cnschtes Sortierverfahren aus. Verf%cgbare Sortierverfahren: Quicksort(q),Bubblesort(s)\n", ae, ue, ue);
+	input = getchar();
 
-		// Um Buffer zu leeren
-		fseek(stdin, 0, SEEK_END);
+	// Um Buffer zu leeren
+	fseek(stdin, 0, SEEK_END);
 
-		switch (input) {
-		case 'q':
-		case 'Q':
-			pStart = QuickSortPrep(pStart);
-			break;
-		case 's':
-		case 'S':
-			pStart = BubbleSort(pStart);
-			break;
-		default:
-			printf("Ihre Eingabe ist nicht g%cltig. Bitte versuchen sie es erneut\n", ue);
-			break;
-		}
-	
+	switch (input) {
+	case 'q':
+	case 'Q':
+//		pStart = QuickSortPrep(pStart);
+		printf("QuickSort ist zur Zeit nicht verwendbar.\n");
+		break;
+	case 's':
+	case 'S':
+		pStart = BubbleSort(pStart);
+		break;
+	default:
+		printf("Ihre Eingabe ist nicht g%cltig. Bitte versuchen sie es erneut\n", ue);
+		break;
+	}
+
 	return pStart;
 }
 
