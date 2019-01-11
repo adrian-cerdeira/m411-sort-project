@@ -1,11 +1,12 @@
 // Catch Error of scanf
 #define _CRT_SECURE_NO_WARNINGS
+
 // Umlaute definieren
 #define ue (unsigned char)129
 #define oe (unsigned char)148
 #define ae (unsigned char)132
-//TODO Legalität von umlauten als Globale Variablen abklären!!!
 
+// Bibliothek importieren
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"
@@ -405,10 +406,6 @@ int main() {
 			case 'a':
 			case 'A':
 				Output(pStart);
-				break;
-			case 'l':
-			case 'L':
-				// Listenauswahl
 				break;
 			case 'e':
 			case 'E':
